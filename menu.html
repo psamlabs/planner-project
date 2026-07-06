@@ -111,8 +111,7 @@
   .banner__check{ position:absolute; inset:0 0 0 auto; width:34mm; opacity:.5; }
   .banner__title{ font-family:var(--head); font-size:38pt; line-height:.9; position:relative; }
   .banner__kick{ font-family:var(--sub); font-weight:500; font-size:12pt; color:var(--ink); opacity:.8; margin-top:1mm; }
-  .banner__illo{ margin-left:auto; position:relative; }
-  .banner__illo svg{ width:26mm; height:26mm; display:block; }
+  .banner__illo{ margin-left:auto; position:relative; width:26mm; height:26mm; }
 
   /* --------------------------------------------------------------- cards */
   .cards{ display:grid; grid-template-columns:1fr 1fr; gap:7mm; align-content:start; }
@@ -123,8 +122,14 @@
     padding:6mm; position:relative; overflow:hidden; break-inside:avoid;
   }
   .card--wide{ grid-column:1 / -1; }
-  .card__illo{ position:absolute; top:2mm; right:2mm; }
-  .card__illo svg{ width:22mm; height:22mm; display:block; }
+  .card__illo{ position:absolute; top:2mm; right:2mm; width:22mm; height:22mm; }
+
+  /* illustration slot: PNG (assets/…) on top, vector fallback behind */
+  .illo{ position:relative; display:block; width:100%; height:100%; }
+  .illo-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+  .illo-svg, .illo-svg svg{ display:block; width:100%; height:100%; }
+  .scatter{ position:absolute; z-index:1; pointer-events:none; }
+  .scatter .illo-svg svg{ filter:none; }   /* keep tiny scatter crisp */
   .card__title{ font-family:var(--sub); font-weight:600; font-size:20pt; line-height:1; color:var(--hue); padding-right:20mm; }
   .card__tag{ font-family:var(--body); font-weight:800; font-size:8pt; letter-spacing:.12em; text-transform:uppercase;
     color:var(--hue); opacity:.7; margin:2mm 0 4mm; }
@@ -175,13 +180,22 @@
 </style>
 
 <div class="toolbar no-print">print → Cmd/Ctrl + P</div>
+
+<!-- watercolour edge filter (softens the vector fallbacks) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="wc" x="-8%" y="-8%" width="116%" height="116%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</defs></svg>
+
 <div id="book"></div>
 
 <script>
 /* ============================================================================
    ILLUSTRATIONS — soft painterly fruit / food SVGs (no hard black outline)
    ============================================================================ */
-function s(inner,vb="0 0 100 100"){ return `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`; }
+function s(inner,vb="0 0 100 100"){ return `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg"><g filter="url(#wc)">${inner}</g></svg>`; }
 // helper: soft shape = fill + darker shade + white highlight
 const HL='rgba(255,255,255,.55)';
 
@@ -257,6 +271,27 @@ const ILLO = {
     <line x1="40" y1="80" x2="64" y2="80" stroke="#b98adf" stroke-width="4" stroke-linecap="round"/>
     <circle cx="60" cy="38" r="4.5" fill="#e2503a"/>
     <path d="M60 38 l12 -16" stroke="#6aa544" stroke-width="3" stroke-linecap="round"/>`),
+  watermelon: s(`
+    <path d="M18 40 A34 34 0 0 1 82 40 L74 44 A26 26 0 0 0 26 44 Z" fill="#3f9a4e"/>
+    <path d="M22 44 A28 28 0 0 1 78 44 L72 48 A22 22 0 0 0 28 48 Z" fill="#eafae0"/>
+    <path d="M26 47 A24 24 0 0 1 74 47 Z" fill="#ef5a6a"/>
+    <g fill="#3a2a2a"><path d="M38 52 l2 -3 2 3 -2 3z"/><path d="M50 55 l2 -3 2 3 -2 3z"/><path d="M62 52 l2 -3 2 3 -2 3z"/></g>`),
+  orange: s(`
+    <circle cx="50" cy="55" r="30" fill="#f39237"/>
+    <circle cx="50" cy="55" r="30" fill="#e07a20" opacity=".3" transform="translate(3 4)"/>
+    <path d="M50 26 q4 -6 12 -5 q-3 6 -12 5z" fill="#6aa544"/>
+    <ellipse cx="40" cy="47" rx="8" ry="10" fill="${HL}"/>`),
+  plum: s(`
+    <circle cx="42" cy="56" r="17" fill="#7a4a9c"/>
+    <circle cx="64" cy="58" r="15" fill="#8b5aad"/>
+    <path d="M42 40 q4 -12 14 -14" stroke="#5a8f3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M42 39 q0 8 0 12 M64 43 q0 8 0 12" stroke="#5a3a72" stroke-width="2.5" opacity=".5"/>
+    <circle cx="37" cy="50" r="4" fill="${HL}"/>`),
+  kiwi: s(`
+    <circle cx="50" cy="55" r="30" fill="#8a6a3a"/>
+    <circle cx="50" cy="55" r="26" fill="#8fbf4a"/>
+    <circle cx="50" cy="55" r="9" fill="#eef6d0"/>
+    <g fill="#2e2a1a"><circle cx="50" cy="40" r="1.5"/><circle cx="62" cy="48" r="1.5"/><circle cx="62" cy="62" r="1.5"/><circle cx="50" cy="70" r="1.5"/><circle cx="38" cy="62" r="1.5"/><circle cx="38" cy="48" r="1.5"/></g>`),
   mascot: s(`
     <rect x="24" y="26" width="52" height="52" rx="16" fill="#ffb4da"/>
     <rect x="24" y="26" width="52" height="52" rx="16" fill="#ef86ac" opacity=".3" transform="translate(0 3)"/>
@@ -268,6 +303,16 @@ const ILLO = {
 function sparkle(x,y,size,color){
   return `<div class="spark" style="left:${x};top:${y};width:${size}mm;height:${size}mm">
     <svg viewBox="0 0 100 100"><path d="M50 6 C54 34 66 46 94 50 C66 54 54 66 50 94 C46 66 34 54 6 50 C34 46 46 34 50 6Z" fill="${color}"/></svg></div>`;
+}
+/* illustration slot: PNG from assets/<key>.png on top, vector fallback behind.
+   Missing PNG → onerror removes the img and the vector shows. */
+function illo(key){
+  return `<span class="illo"><img class="illo-img" src="assets/${key}.png" alt=""
+    onload="this.nextElementSibling.style.display='none'" onerror="this.remove()"><span class="illo-svg">${ILLO[key]||""}</span></span>`;
+}
+/* a scattered decorative fruit at an absolute position */
+function scatterFruit(key,x,y,size,rot=0){
+  return `<div class="scatter" style="left:${x};top:${y};width:${size}mm;height:${size}mm;transform:rotate(${rot}deg)"><span class="illo-svg">${ILLO[key]||""}</span></div>`;
 }
 
 /* ============================================================================
@@ -367,7 +412,7 @@ function itemHTML(d){
 function cardHTML(g){
   const two=(g.wide&&g.items.length>4)?" two":"";
   return `<div class="card ${g.wide?'card--wide':''}" style="--pastel:${g.pastel};--hue:${g.hue}">
-    <div class="card__illo">${ILLO[g.illo]||""}</div>
+    <div class="card__illo">${illo(g.illo)}</div>
     <div class="card__title">${g.origin}</div><div class="card__tag">${g.tag}</div>
     <div class="card__items${two}">${g.items.map(itemHTML).join("")}</div></div>`;
 }
@@ -376,23 +421,23 @@ function bannerHTML(meal){
     <div class="gingham banner__check"></div>
     <div><div class="banner__title" style="color:${meal.banner.hue}">${meal.label.toUpperCase()}</div>
     <div class="banner__kick">${meal.kick}</div></div>
-    <div class="banner__illo">${ILLO[meal.illo]}</div></div>`;
+    <div class="banner__illo">${illo(meal.illo)}</div></div>`;
 }
 function counterHTML(){
   const run=COUNTER.items.map(c=>{const sym=c.sym?`<i class="b b--h">♥</i>`:"";const note=c.note?` <em>(${c.note})</em>`:"";return `${c.name}${sym}${note}`;}).join('<span class="dot">✿</span>');
   return `<div class="card card--wide" style="--pastel:${COUNTER.pastel};--hue:${COUNTER.hue}">
-    <div class="card__illo">${ILLO[COUNTER.illo]}</div><div class="card__title">${COUNTER.origin}</div>
+    <div class="card__illo">${illo(COUNTER.illo)}</div><div class="card__title">${COUNTER.origin}</div>
     <div class="card__tag">${COUNTER.tag}</div><div class="counter">${run}</div></div>`;
 }
 function sweetHTML(){
   return `<div class="card feature" style="--pastel:${SWEET.pastel};--hue:${SWEET.hue}">
-    <div class="card__illo">${ILLO[SWEET.illo]}</div><div class="card__title">${SWEET.origin}</div>
+    <div class="card__illo">${illo(SWEET.illo)}</div><div class="card__title">${SWEET.origin}</div>
     <div class="feature__name">${SWEET.name} <span class="new">new</span></div><div class="feature__desc">${SWEET.desc}</div></div>`;
 }
 function drinkCardHTML(g){
   const rows=g.items.map(d=>`<div class="drink"><span class="drink__name">${d.name}</span><span class="drink__lead"></span></div>`).join("");
   return `<div class="card" style="--pastel:${g.pastel};--hue:${g.hue}">
-    <div class="card__illo">${ILLO[g.illo]||""}</div><div class="card__title">${g.origin}</div>
+    <div class="card__illo">${illo(g.illo)}</div><div class="card__title">${g.origin}</div>
     <div class="card__tag">${g.tag}</div><div class="card__items" style="gap:2mm">${rows}</div></div>`;
 }
 function foot(pg){ return `<div class="foot"><span>THE DAILY · PRANJAL'S KITCHEN</span><span>${pg}</span></div>`; }
@@ -424,17 +469,22 @@ const lunch2 = page(
   `<div class="banner" style="background:${L.banner.pastel}"><div class="gingham banner__check"></div>
     <div><div class="banner__title" style="font-size:28pt;color:${L.banner.hue}">LUNCH, cont.</div>
     <div class="banner__kick">between breads &amp; big bowls</div></div>
-    <div class="banner__illo">${ILLO.peach}</div></div>`+
+    <div class="banner__illo">${illo("peach")}</div></div>`+
   `<div class="cards">${L.groups2.map(cardHTML).join("")}${counterHTML()}</div>`+foot("Lunch · 2 of 2"),"",
-  sparkle("172mm","118mm",8,"#ffd23c"));
+  sparkle("172mm","118mm",8,"#ffd23c")+
+  scatterFruit("cherry","150mm","235mm",26,-10)+scatterFruit("kiwi","30mm","245mm",22,8)+scatterFruit("plum","95mm","250mm",20,-6));
 const D=CATALOGUE.dinner;
 const dinner = page(bannerHTML(D)+`<div class="cards">${cardHTML(D.groups[0])}${cardHTML(D.groups[1])}${sweetHTML()}</div>`+foot("Dinner"),"",
-  sparkle("178mm","58mm",7,"#c9a7e6")+sparkle("8mm","250mm",6,"#ffd23c"));
+  sparkle("178mm","58mm",7,"#c9a7e6")+sparkle("8mm","250mm",6,"#ffd23c")+
+  scatterFruit("watermelon","150mm","245mm",30,-10)+scatterFruit("strawberry","95mm","250mm",20,8));
 const DR=CATALOGUE.drinks;
 const drinks = page(bannerHTML(DR)+`<div class="cards">${DR.groups.map(drinkCardHTML).join("")}</div>`+
-  `<div class="closing"><div style="width:30mm;flex:none">${ILLO.mascot}</div>
+  `<div class="closing"><div style="width:30mm;height:30mm;flex:none">${illo("mascot")}</div>
     <div class="closing__txt"><b>That's the menu!</b><br>Cocktails are a starting list — only rule is gin, whiskey or vodka. Tell the kitchen what you're feeling.</div></div>`+
-  foot("Drinks"),"", sparkle("174mm","150mm",8,"#8fb3ec")+sparkle("10mm","30mm",6,"#a7dd8a"));
+  foot("Drinks"),"",
+  sparkle("174mm","150mm",8,"#8fb3ec")+sparkle("10mm","30mm",6,"#a7dd8a")+
+  scatterFruit("orange","150mm","185mm",26,-12)+scatterFruit("watermelon","36mm","172mm",30,10)+
+  scatterFruit("blueberry","120mm","205mm",20,6)+scatterFruit("lemon","70mm","210mm",18,-8));
 
 document.getElementById("book").innerHTML = cover+lunch1+lunch2+dinner+drinks;
 </script>
