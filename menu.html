@@ -1,590 +1,529 @@
 <!--
-  THE DAILY — My Menu
+  THE DAILY — My Menu  ·  vibrant / retro-sticker edition
   A print-ready, café-style menu of everything Pranjal cooks.
 
   HOW TO PRINT
   ------------
-  Open this file in Chrome → Cmd/Ctrl+P → "Save as PDF".
-  Paper: A4 · Margins: Default (the layout supplies its own) · Background graphics: ON.
+  Open in Chrome → Cmd/Ctrl+P → "Save as PDF".
+  Paper: A4 · Margins: None/Default · Background graphics: ON.
 
   HOW TO EDIT
   -----------
-  All dishes live in the MENU array in the <script> at the bottom of this file.
-  Change names, descriptions, symbols or sections there — the layout redraws
-  itself. Nothing about the design needs touching to add or remove a dish.
+  All dishes live in the CATALOGUE object in the <script> at the bottom.
+  Structure: meal (Lunch/Dinner/Drinks) → cuisine group → items.
+  Each group has its own box colour (`bg`), text colour (`ink`) and an
+  illustration key (`illo`). Change data there; the layout redraws itself.
 
-  Symbols:  ◆ house special (solo)   ♥ for two (shared)   (new) saved, not yet in rotation
+  Symbols:  ◆ house special (solo)   ♥ for two (shared)   NEW = saved, not yet in rotation
 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>THE DAILY — My Menu</title>
 
 <style>
-  /* =========================================================================
-     THE DAILY — draft skin: zine / risograph starting point
-     2 inks (ember red + ink blue) on warm paper, hand-set type feel.
-     Swap the --ink / --paper vars + fonts when the reference lands.
-     ========================================================================= */
+  @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,500;0,700;0,800;0,900;1,600;1,700&display=swap');
 
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap');
+  :root{
+    --outline: #241b2e;          /* shared dark outline + hard shadow  */
+    --shadow: 5px 5px 0 var(--outline);
+    --shadow-sm: 3px 3px 0 var(--outline);
+    --page-bg: #fff;             /* set below */
+    --cream: #fff6df;
 
-  :root {
-    --paper:      #f3ead6;   /* warm off-white stock */
-    --paper-deep: #ece0c6;
-    --ink:        #1f2a44;   /* ink blue — primary */
-    --ember:      #e0452c;   /* riso ember red — accent */
-    --ember-soft: #f0a58f;
-    --faded:      #6d6a5f;
-
-    --serif: "Fraunces", "Hoefler Text", Georgia, serif;
-    --mono:  "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    --display: "Bungee", system-ui, sans-serif;   /* chunky retro   */
+    --round:   "Fredoka", system-ui, sans-serif;  /* bubbly rounded */
+    --body:    "Nunito", system-ui, sans-serif;   /* clean sans     */
 
     --page-w: 210mm;
     --page-h: 297mm;
-    --pad:    16mm;
+    --pad: 13mm;
   }
 
-  * { box-sizing: border-box; }
+  *{ box-sizing: border-box; }
+  html{ background:#e9c8dd; }
+  body{ margin:0; font-family:var(--body); color:var(--outline); -webkit-font-smoothing:antialiased; }
 
-  html { background: #b9ad91; }
-
-  body {
-    margin: 0;
-    font-family: var(--serif);
-    color: var(--ink);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-
-  /* ---- The page (one A4 leaf of the booklet) ---------------------------- */
-  .page {
-    position: relative;
-    width: var(--page-w);
-    min-height: var(--page-h);
-    margin: 10mm auto;
-    padding: var(--pad);
-    background-color: var(--paper);
-    /* paper grain: fine speckle so screen ≈ print */
+  /* ---------------------------------------------------------------- page */
+  .page{
+    position:relative;
+    width:var(--page-w);
+    height:var(--page-h);
+    margin:9mm auto;
+    padding:var(--pad);
+    overflow:hidden;
+    background:#fff7e6;
     background-image:
-      radial-gradient(circle at 50% 50%, rgba(31,42,68,.035) 0.5px, transparent 0.6px),
-      radial-gradient(circle at 50% 50%, rgba(224,69,44,.028) 0.5px, transparent 0.6px);
-    background-size: 3px 3px, 4px 4px;
-    background-position: 0 0, 1px 2px;
-    box-shadow: 0 6px 30px rgba(0,0,0,.28);
-    overflow: hidden;
+      radial-gradient(circle at 12% 88%, #ffe1ef 0 0),
+      radial-gradient(#ffd9a8 1.1px, transparent 1.2px);
+    background-size: 100% 100%, 16px 16px;
+    box-shadow:0 8px 34px rgba(0,0,0,.25);
+  }
+  .page__in{ position:relative; height:100%; z-index:2; display:flex; flex-direction:column; }
+
+  /* scattered sparkle stars (decoration layer) */
+  .spark{ position:absolute; z-index:1; pointer-events:none; }
+
+  /* ---------------------------------------------------------------- cover */
+  .cover{ background:#ff4f9a;
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.16) 0 0),
+      radial-gradient(rgba(255,255,255,.35) 1.4px, transparent 1.5px);
+    background-size:100% 100%, 20px 20px;
+  }
+  .cover__frame{
+    flex:1; border:3px solid var(--outline); border-radius:26px;
+    background:#fff6df; box-shadow:var(--shadow);
+    padding:12mm 11mm; display:flex; flex-direction:column; position:relative; overflow:hidden;
+  }
+  .cover__ribbon{
+    align-self:flex-start;
+    font-family:var(--round); font-weight:700; font-size:11pt; letter-spacing:.02em;
+    background:#ffd23c; color:var(--outline);
+    border:3px solid var(--outline); border-radius:999px;
+    padding:3px 16px; box-shadow:var(--shadow-sm);
+  }
+  .cover__logo{
+    font-family:var(--display); line-height:.92; letter-spacing:.01em;
+    font-size:82pt; margin:8mm 0 0;
+  }
+  .cover__logo .l1{ color:#ff4f9a; }
+  .cover__logo .l2{ color:#2fb56b; }
+  .cover__logo .l1, .cover__logo .l2{
+    -webkit-text-stroke:2.5px var(--outline); text-shadow:4px 4px 0 var(--outline);
+    display:block;
+  }
+  .cover__tag{
+    font-family:var(--round); font-style:italic; font-weight:500;
+    font-size:16pt; margin-top:7mm; max-width:135mm; line-height:1.35; color:var(--outline);
+  }
+  .cover__ritual{
+    margin-top:6mm; background:#59b7f5; color:var(--outline);
+    border:3px solid var(--outline); border-radius:16px; box-shadow:var(--shadow-sm);
+    padding:5mm 6mm; font-family:var(--body); font-weight:700; font-size:11pt; max-width:120mm;
+  }
+  .cover__ritual b{ font-family:var(--round); }
+  .cover__spacer{ flex:1; }
+  .legend{ display:flex; flex-wrap:wrap; gap:5mm; }
+  .legend .chip{
+    display:inline-flex; align-items:center; gap:6px;
+    background:#fff; color:var(--outline);
+    border:2.5px solid var(--outline); border-radius:999px;
+    padding:4px 13px; font-family:var(--body); font-weight:800; font-size:9.5pt;
+    box-shadow:2px 2px 0 var(--outline);
+  }
+  .legend .chip .s{ font-size:12pt; line-height:1; }
+  .cover__foot{
+    margin-top:6mm; display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--display); font-size:9pt; letter-spacing:.06em; color:var(--outline);
   }
 
-  /* hairline registration frame — a zine tell */
-  .page::before {
-    content: "";
-    position: absolute;
-    inset: 8mm;
-    border: 1px solid rgba(31,42,68,.35);
-    pointer-events: none;
+  /* ------------------------------------------------------------- banners */
+  .banner{
+    display:flex; align-items:center; gap:6mm;
+    border:3px solid var(--outline); border-radius:20px; box-shadow:var(--shadow);
+    padding:5mm 8mm; margin-bottom:7mm; position:relative;
+  }
+  .banner__title{ font-family:var(--display); font-size:34pt; line-height:.9; color:var(--outline); }
+  .banner__kick{ font-family:var(--round); font-weight:600; font-size:11pt; opacity:.85; margin-top:1mm; }
+  .banner__illo{ margin-left:auto; }
+  .banner__illo svg{ width:26mm; height:26mm; display:block; }
+
+  /* --------------------------------------------------------------- cards */
+  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:7mm; align-content:start; }
+  .card{
+    --bg:#fff; --ink:var(--outline);
+    background:var(--bg); color:var(--ink);
+    border:3px solid var(--outline); border-radius:18px; box-shadow:var(--shadow);
+    padding:6mm 6mm 6mm; position:relative; overflow:hidden;
+    break-inside:avoid;
+  }
+  .card--wide{ grid-column:1 / -1; }
+  .card__illo{ position:absolute; top:-3mm; right:-3mm; opacity:.9; }
+  .card__illo svg{ width:24mm; height:24mm; display:block; }
+  .card__title{
+    font-family:var(--round); font-weight:700; font-size:19pt; line-height:1;
+    color:var(--ink); padding-right:20mm;
+  }
+  .card__tag{
+    font-family:var(--body); font-weight:800; font-size:8pt; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink); opacity:.72; margin:1.5mm 0 4mm;
+  }
+  .card__items{ display:grid; grid-template-columns:1fr; gap:3mm; }
+  .card__items.two{ grid-template-columns:1fr 1fr; gap:3mm 8mm; }
+
+  .it{ break-inside:avoid; }
+  .it__top{ display:flex; align-items:baseline; gap:2mm; flex-wrap:wrap; }
+  .it__name{ font-family:var(--body); font-weight:900; font-size:11.5pt; color:var(--ink); line-height:1.05; }
+  .it__desc{ font-family:var(--body); font-weight:600; font-style:italic; font-size:8.8pt; line-height:1.28;
+             color:var(--ink); opacity:.78; margin-top:.6mm; }
+
+  /* badges */
+  .b{ font-style:normal; font-size:11pt; line-height:1; }
+  .b--d{ color:#e0452c; }              /* diamond ◆ */
+  .b--h{ color:#ff2e88; }              /* heart ♥   */
+  .card[style*="--ink:#fff"] .b--d,
+  .card[style*="--ink: #fff"] .b--d{ color:#ffd23c; }
+  .new{
+    font-family:var(--body); font-style:normal; font-weight:900; font-size:6.5pt; letter-spacing:.08em;
+    background:var(--outline); color:#fff; border-radius:999px; padding:1.5px 6px; text-transform:uppercase;
+    position:relative; top:-1px;
   }
 
-  .page__inner { position: relative; z-index: 1; }
+  /* counter strip (inline run) */
+  .counter{ font-family:var(--body); font-weight:800; font-size:11.5pt; line-height:1.85; color:var(--ink); }
+  .counter .dot{ color:var(--ink); opacity:.5; margin:0 3mm; }
+  .counter em{ font-weight:700; font-size:8.5pt; opacity:.75; }
 
-  /* corner crop marks */
-  .crop { position: absolute; width: 6mm; height: 6mm; z-index: 2; }
-  .crop::before, .crop::after { content:""; position:absolute; background: var(--ember); }
-  .crop::before { width:100%; height:1px; top:0; }
-  .crop::after  { width:1px; height:100%; left:0; }
-  .crop.tl { top: 4mm; left: 4mm; }
-  .crop.tr { top: 4mm; right: 4mm; transform: scaleX(-1); }
-  .crop.bl { bottom: 4mm; left: 4mm; transform: scaleY(-1); }
-  .crop.br { bottom: 4mm; right: 4mm; transform: scale(-1); }
+  /* sweet feature */
+  .feature{ text-align:center; }
+  .feature .card__title{ padding:0; }
+  .feature__name{ font-family:var(--round); font-weight:700; font-size:17pt; margin-top:2mm; color:var(--ink); }
+  .feature__desc{ font-family:var(--body); font-style:italic; font-weight:700; font-size:10.5pt; opacity:.82; margin-top:2mm; color:var(--ink); }
 
-  /* =========================== COVER ==================================== */
-  .cover .page__inner {
-    height: calc(var(--page-h) - 2*var(--pad));
-    display: flex;
-    flex-direction: column;
-  }
-  .cover__top {
-    font-family: var(--mono);
-    font-size: 9.5pt;
-    letter-spacing: .28em;
-    text-transform: uppercase;
-    display: flex;
-    justify-content: space-between;
-    color: var(--faded);
-  }
-  .cover__mid { margin-top: auto; margin-bottom: auto; }
-  .cover__kicker {
-    font-family: var(--mono);
-    font-size: 10pt;
-    letter-spacing: .35em;
-    text-transform: uppercase;
-    color: var(--ember);
-    margin-bottom: 6mm;
-  }
-  .cover__title {
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 108pt;
-    line-height: .86;
-    letter-spacing: -.02em;
-    margin: 0;
-  }
-  .cover__title .amp { color: var(--ember); font-style: italic; font-weight: 400; }
-  .cover__sub {
-    margin-top: 8mm;
-    max-width: 120mm;
-    font-size: 13pt;
-    line-height: 1.5;
-    font-style: italic;
-    color: var(--ink);
-  }
-  .cover__rule {
-    height: 3px;
-    background: var(--ink);
-    margin: 9mm 0;
-    position: relative;
-  }
-  .cover__rule::after {
-    content:""; position:absolute; left:0; top:6px; width: 46mm; height:3px; background: var(--ember);
-  }
-  .cover__profile {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6mm 10mm;
-    font-family: var(--mono);
-    font-size: 8.5pt;
-    line-height: 1.55;
-    color: var(--ink);
-  }
-  .cover__profile b { color: var(--ember); letter-spacing: .08em; text-transform: uppercase; display:block; margin-bottom:1.5mm; }
-  .cover__foot {
-    margin-top: 8mm;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    font-family: var(--mono);
-    font-size: 8pt;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--faded);
-  }
+  /* drinks list rows */
+  .drink{ display:flex; align-items:baseline; gap:2mm; }
+  .drink__name{ font-family:var(--body); font-weight:900; font-size:12pt; color:var(--ink); }
+  .drink__lead{ flex:1; border-bottom:2px dotted currentColor; opacity:.4; margin:0 1mm 1.4mm; }
 
-  /* legend chips */
-  .legend { display: flex; gap: 7mm; flex-wrap: wrap; font-family: var(--mono); font-size: 8.5pt; }
-  .legend span { display:inline-flex; align-items:center; gap:2mm; }
-  .sym { color: var(--ember); font-size: 11pt; line-height: 1; }
-  .sym-new { font-style: italic; color: var(--ember); font-family: var(--serif); }
+  .closing{
+    margin-top:auto; display:flex; align-items:center; gap:6mm;
+    border-top:3px dashed var(--outline); padding-top:5mm;
+  }
+  .closing__txt{ font-family:var(--round); font-weight:600; font-size:11pt; line-height:1.4; }
+  .closing__txt b{ font-family:var(--display); font-size:12pt; }
 
-  /* =========================== CONTENT ================================== */
-  .masthead {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    border-bottom: 3px solid var(--ink);
-    padding-bottom: 3mm;
-    margin-bottom: 7mm;
-  }
-  .masthead__name { font-family: var(--mono); font-weight: 700; letter-spacing:.3em; font-size: 10pt; text-transform: uppercase; }
-  .masthead__pg   { font-family: var(--mono); font-size: 9pt; color: var(--faded); letter-spacing:.2em; }
+  /* running foot */
+  .foot{ margin-top:5mm; font-family:var(--display); font-size:7.5pt; letter-spacing:.05em; color:var(--outline); opacity:.7;
+         display:flex; justify-content:space-between; }
 
-  .section { margin-bottom: 9mm; break-inside: avoid; }
-  .section:last-child { margin-bottom: 0; }
-
-  .section__head {
-    display: flex;
-    align-items: baseline;
-    gap: 4mm;
-    margin-bottom: 4mm;
+  /* ---------------------------------------------------------------- print */
+  @page{ size:A4; margin:0; }
+  @media print{
+    html{ background:#fff; }
+    .page{ margin:0; box-shadow:none; page-break-after:always; break-after:page; }
+    .page:last-child{ page-break-after:auto; }
+    .no-print{ display:none !important; }
   }
-  .section__no {
-    font-family: var(--mono);
-    font-size: 9pt;
-    color: var(--ember);
-    letter-spacing: .1em;
+  .toolbar{
+    position:fixed; top:12px; right:12px; z-index:99; font-family:var(--body); font-weight:800; font-size:11px;
+    background:var(--outline); color:#ffd23c; padding:8px 12px; border-radius:999px; box-shadow:3px 3px 0 #ff4f9a;
   }
-  .section__title {
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 22pt;
-    letter-spacing: -.01em;
-    margin: 0;
-    line-height: 1;
-  }
-  .section__dots { flex: 1; border-bottom: 1.5px dotted var(--ink); align-self: center; margin: 0 1mm; opacity:.5; }
-  .section__tag {
-    font-family: var(--mono);
-    font-size: 7.5pt;
-    text-transform: uppercase;
-    letter-spacing: .16em;
-    color: var(--faded);
-    white-space: nowrap;
-  }
-
-  /* dish list — two column on roomy sections */
-  .dishes { display: grid; grid-template-columns: 1fr; gap: 3.5mm 12mm; }
-  .dishes.cols-2 { grid-template-columns: 1fr 1fr; }
-
-  .dish { break-inside: avoid; }
-  .dish__line {
-    display: flex;
-    align-items: baseline;
-    gap: 2mm;
-  }
-  .dish__name {
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 12pt;
-    white-space: nowrap;
-  }
-  .dish__sym { color: var(--ember); font-size: 11pt; }
-  .dish__new { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 9pt; color: var(--ember); }
-  .dish__lead { flex: 1; border-bottom: 1px dotted rgba(31,42,68,.4); margin: 0 1.5mm 1.2mm; }
-  .dish__desc {
-    font-family: var(--serif);
-    font-size: 9.5pt;
-    line-height: 1.35;
-    color: var(--faded);
-    margin-top: .5mm;
-    font-style: italic;
-  }
-
-  /* condiment counter — inline run */
-  .counter {
-    font-family: var(--serif);
-    font-size: 12pt;
-    line-height: 1.9;
-  }
-  .counter b { font-weight: 600; }
-  .counter .dot { color: var(--ember); margin: 0 2.5mm; }
-  .counter .note { display:block; margin-top:3mm; font-size:9.5pt; font-style:italic; color:var(--faded); }
-
-  /* bar list */
-  .bar { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm 12mm; }
-  .bar__group b {
-    display:block; font-family: var(--mono); font-size: 8pt; text-transform: uppercase;
-    letter-spacing:.18em; color: var(--ember); margin-bottom: 2.5mm; border-bottom:1px solid var(--ember-soft); padding-bottom:1.5mm;
-  }
-  .bar__group ul { list-style:none; margin:0; padding:0; }
-  .bar__group li { font-size: 12pt; margin-bottom: 1.5mm; }
-  .bar__group li span { color: var(--faded); font-size: 9pt; font-style: italic; }
-
-  /* sweet ending feature block */
-  .feature {
-    border: 2px solid var(--ink);
-    padding: 7mm;
-    text-align: center;
-    background:
-      repeating-linear-gradient(45deg, rgba(224,69,44,.05) 0 6px, transparent 6px 12px);
-  }
-  .feature__name { font-family: var(--serif); font-weight:700; font-size: 20pt; }
-  .feature__desc { font-style: italic; color: var(--faded); margin-top: 3mm; font-size: 11pt; }
-
-  .colophon {
-    margin-top: 8mm;
-    border-top: 1px solid rgba(31,42,68,.3);
-    padding-top: 4mm;
-    font-family: var(--mono);
-    font-size: 7.5pt;
-    letter-spacing: .12em;
-    color: var(--faded);
-    line-height: 1.7;
-    text-transform: uppercase;
-  }
-
-  /* =========================== PRINT ==================================== */
-  @page { size: A4; margin: 0; }
-
-  @media print {
-    html { background: #fff; }
-    .page {
-      margin: 0;
-      box-shadow: none;
-      width: var(--page-w);
-      height: var(--page-h);
-      page-break-after: always;
-      break-after: page;
-    }
-    .page:last-child { page-break-after: auto; }
-    .no-print { display: none !important; }
-  }
-
-  /* screen-only helper bar */
-  .toolbar {
-    position: fixed; top: 12px; right: 12px; z-index: 99;
-    font-family: var(--mono); font-size: 11px;
-    background: var(--ink); color: var(--paper);
-    padding: 8px 12px; border-radius: 2px;
-    box-shadow: 0 4px 14px rgba(0,0,0,.3);
-  }
-  .toolbar b { color: var(--ember-soft); }
 </style>
 
-<div class="toolbar no-print">DRAFT · print to PDF → <b>Cmd/Ctrl + P</b></div>
-
+<div class="toolbar no-print">print → Cmd/Ctrl + P</div>
 <div id="book"></div>
 
 <script>
-/* ===========================================================================
-   MENU DATA  —  edit here, the layout redraws itself.
-   symbol: "diamond" (◆ house special) | "heart" (♥ for two) | null
-   isNew:  true  → prints the italic (new) marker
-   =========================================================================== */
+/* ============================================================================
+   ILLUSTRATIONS — simple flat inline SVGs, shared dark outline
+   ============================================================================ */
+const OL = "#241b2e";
+function svg(inner, vb="0 0 100 100"){ return `<svg viewBox="${vb}" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="${OL}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">${inner}</svg>`; }
 
-const PROFILE = {
-  diet:      "Vegetarian · paneer, dairy, tofu & plant proteins. No eggs, no meat.",
-  kitchen:   "Stovetop + air fryer. No oven — everything adapted to the tools on hand.",
-  breakfast: "Most mornings begin with The Regular: Greek yogurt, muesli & an apple.",
-  cook:      "Cooked for one, sometimes two. Symbols tell you which is which."
+const ILLO = {
+  dosa: svg(`
+    <ellipse cx="50" cy="80" rx="40" ry="10" fill="#fff"/>
+    <path d="M20 76 L58 22 Q63 15 66 24 L76 76 Z" fill="#f2b441"/>
+    <circle cx="40" cy="66" r="3.5" fill="#c77a2a" stroke="none"/>
+    <circle cx="52" cy="72" r="3" fill="#c77a2a" stroke="none"/>
+    <circle cx="16" cy="70" r="7" fill="#ffffff"/>`),
+  coffee: svg(`
+    <path d="M30 20 q-6 6 0 12" stroke-width="3.5"/>
+    <path d="M46 16 q-6 7 0 14" stroke-width="3.5"/>
+    <path d="M24 44 h44 v14 a22 22 0 0 1 -44 0 Z" fill="#fff"/>
+    <path d="M68 47 a12 12 0 0 1 0 20" fill="none"/>
+    <ellipse cx="46" cy="44" rx="22" ry="6" fill="#6b3f1d"/>
+    <ellipse cx="46" cy="82" rx="30" ry="6" fill="#fff"/>`),
+  pasta: svg(`
+    <path d="M14 52 a36 22 0 0 0 72 0 Z" fill="#ffd23c"/>
+    <path d="M22 52 q10 -20 26 -12 M36 50 q10 -22 28 -10 M50 51 q12 -18 26 -6" stroke="#f0503c" stroke-width="3.5" fill="none"/>
+    <circle cx="34" cy="40" r="4" fill="#f0503c" stroke="none"/>
+    <circle cx="60" cy="42" r="4" fill="#f0503c" stroke="none"/>`),
+  cocktail: svg(`
+    <path d="M22 24 H78 L52 56 V78" fill="#8fe3ff"/>
+    <line x1="40" y1="80" x2="64" y2="80"/>
+    <circle cx="58" cy="40" r="4.5" fill="#2fb56b" stroke="none"/>
+    <line x1="58" y1="40" x2="72" y2="20" stroke-width="3"/>`),
+  matcha: svg(`
+    <path d="M26 46 h40 v12 a20 20 0 0 1 -40 0 Z" fill="#8fce4f"/>
+    <ellipse cx="46" cy="46" rx="20" ry="5.5" fill="#a7dd6a"/>
+    <path d="M66 49 a11 11 0 0 1 0 18" fill="none"/>
+    <path d="M34 22 q-5 6 0 12 M46 20 q-5 7 0 12" stroke-width="3.5"/>
+    <ellipse cx="46" cy="80" rx="27" ry="5.5" fill="#fff"/>`),
+  bowl: svg(`
+    <path d="M16 50 a34 24 0 0 0 68 0 Z" fill="#fff"/>
+    <path d="M30 48 a20 12 0 0 0 40 0 Z" fill="#f2b441"/>
+    <circle cx="42" cy="42" r="4" fill="#2fb56b" stroke="none"/>
+    <circle cx="56" cy="44" r="4" fill="#f0503c" stroke="none"/>
+    <path d="M14 50 h72" />`),
+  sandwich: svg(`
+    <path d="M18 40 L50 22 L82 40 Z" fill="#f2b441"/>
+    <path d="M20 44 h60 v6 h-60 Z" fill="#8fce4f"/>
+    <path d="M20 52 h60 l-6 10 a26 26 0 0 1 -48 0 Z" fill="#ffce7a"/>
+    <path d="M30 50 q6 5 12 0 q6 5 12 0 q6 5 12 0" stroke="#f0503c" stroke-width="3" fill="none"/>`),
+  chilli: svg(`
+    <path d="M28 30 q10 -12 20 -4" stroke="#2fb56b" stroke-width="4"/>
+    <path d="M46 26 q22 6 18 40 q-4 20 -22 14 q-16 -6 -6 -24 q8 -14 10 -30 Z" fill="#f0503c"/>`),
+  mascot: svg(`
+    <rect x="24" y="26" width="52" height="52" rx="14" fill="#ffd23c"/>
+    <circle cx="41" cy="48" r="4.5" fill="${OL}" stroke="none"/>
+    <circle cx="59" cy="48" r="4.5" fill="${OL}" stroke="none"/>
+    <path d="M40 60 q10 10 20 0" stroke-width="3.5" fill="none"/>
+    <circle cx="34" cy="58" r="4" fill="#ff8fb3" stroke="none"/>
+    <circle cx="66" cy="58" r="4" fill="#ff8fb3" stroke="none"/>
+    <path d="M24 62 q-9 2 -10 12 M76 62 q9 2 10 12" stroke-width="3.5"/>
+    <path d="M38 78 v10 M62 78 v10" stroke-width="3.5"/>`, "0 0 100 100"),
 };
 
-const MENU = [
-  {
-    title: "All-Day Breakfast",
-    tag: "served whenever you like",
-    cols: 2,
-    items: [
-      { name: "The Regular",  desc: "Greek yogurt, muesli & a crisp apple. The morning ritual." },
-      { name: "Poha",         desc: "Flattened rice, mustard-seed tadka, peanuts & lime." },
-      { name: "Dosa",         sym: "diamond", desc: "Crisp fermented crepe straight off the tawa." },
-      { name: "Uttapam",      sym: "diamond", desc: "Thick, fluffy pancake loaded with onion & tomato." },
-      { name: "Shakshuka",    desc: "Spiced tomato-pepper stew, scoop-with-bread. Veg edition." },
-      { name: "Avocado Toast",sym: "diamond", desc: "Smashed avocado, chilli flakes, good crunch." },
-      { name: "Lentil Chilla",isNew: true, desc: "Savoury moong pancake, quietly protein-packed." },
-      { name: "Ragi Roti",    isNew: true, desc: "Nutty finger-millet flatbread, tawa-fresh." },
-      { name: "Paneer Cucumber Bowl", isNew: true, desc: "Cottage cheese, cucumber & herbs. Cool and light." },
-      { name: "Tahini Chickpea Toast", isNew: true, desc: "Creamy tahini, mashed chickpea, a squeeze of lemon." },
-      { name: "Protein Smoothie Bowl", isNew: true, desc: "Blended thick & spooned. About 35g protein." }
+function sparkle(x,y,size,color){
+  return `<div class="spark" style="left:${x};top:${y};width:${size}mm;height:${size}mm">
+    <svg viewBox="0 0 100 100"><path d="M50 4 L58 42 L96 50 L58 58 L50 96 L42 58 L4 50 L42 42 Z"
+      fill="${color}" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/></svg></div>`;
+}
+
+/* ============================================================================
+   CATALOGUE  — edit dishes here. meal → cuisine group → items.
+   sym: "diamond" ◆ | "heart" ♥ | null   ·   isNew: true → NEW badge
+   ============================================================================ */
+const CATALOGUE = {
+  lunch: {
+    label:"Lunch", kick:"midday, lighter & all-day breakfast", illo:"dosa",
+    bg:"#ffd23c",
+    groups:[
+      { origin:"South Indian", tag:"tiffin & staples", bg:"#ffd23c", ink:"#241b2e", illo:"dosa",
+        items:[
+          {name:"Poha", desc:"Flattened rice, mustard-seed tadka, peanuts & lime."},
+          {name:"Dosa", sym:"diamond", desc:"Crisp fermented crepe, straight off the tawa."},
+          {name:"Uttapam", sym:"diamond", desc:"Thick, fluffy pancake loaded with onion & tomato."},
+        ]},
+      { origin:"Mediterranean & Middle Eastern", tag:"bright, herby, protein-forward", bg:"#ff7a45", ink:"#2a1206", illo:"chilli",
+        items:[
+          {name:"Shakshuka", desc:"Spiced tomato-pepper stew, scoop-with-bread. Veg edition."},
+          {name:"Tahini Chickpea Toast", isNew:true, desc:"Creamy tahini, mashed chickpea, a squeeze of lemon."},
+          {name:"Paneer Shawarma Wrap", isNew:true, desc:"Air-fried crispy paneer, garlic sauce, rolled tight."},
+          {name:"Bruschetta", isNew:true, desc:"Tawa-toasted under a lid. High-protein topping."},
+        ]},
+      { origin:"Café & Continental", tag:"the everyday breakfast bench", bg:"#34c7b5", ink:"#0d2a25", illo:"coffee", wide:true,
+        items:[
+          {name:"The Regular", desc:"Greek yogurt, muesli & a crisp apple. The morning ritual."},
+          {name:"Avocado Toast", sym:"diamond", desc:"Smashed avocado, chilli flakes, good crunch."},
+          {name:"Paneer Cucumber Bowl", isNew:true, desc:"Cottage cheese, cucumber & herbs. Cool and light."},
+          {name:"Protein Smoothie Bowl", isNew:true, desc:"Blended thick & spooned. About 35g protein."},
+          {name:"Lentil Chilla", isNew:true, desc:"Savoury moong pancake, quietly protein-packed."},
+          {name:"Ragi Roti", isNew:true, desc:"Nutty finger-millet flatbread, tawa-fresh."},
+        ]},
+    ],
+    // second lunch page
+    groups2:[
+      { origin:"Between Breads", tag:"sandwiches, wraps & toasts", bg:"#59b7f5", ink:"#0c2740", illo:"sandwich",
+        items:[
+          {name:"House Sandwich", sym:"diamond", desc:"The signature stack, built your way."},
+          {name:"Spicy Korean Sandwich", isNew:true, desc:"Paneer edition — sweet heat & crunch."},
+          {name:"Bean Patty Sandwich", isNew:true, desc:"House-made bean patty, properly stacked."},
+          {name:"Paneer Tikka Garlic Bread", isNew:true, desc:"Tawa-style, smoky paneer on garlic bread."},
+        ]},
+      { origin:"Pan-Asian Bowls", tag:"high-protein, one-bowl meals", bg:"#ff6fae", ink:"#3a0f26", illo:"bowl",
+        items:[
+          {name:"Thai Tofu Bowl", isNew:true, desc:"Coconut-lime & tofu. About 30g protein."},
+          {name:"Gobhi Steak Bowl", isNew:true, desc:"Seared cauliflower steak. About 27g protein."},
+          {name:"Steamed Momos", isNew:true, desc:"Hand-pleated & steamed, with a fiery dip."},
+          {name:"Dahi Vada", isNew:true, desc:"Steamed never fried. Cool yogurt & chutney."},
+        ]},
     ]
   },
-  {
-    title: "Ghar Ka Khaana",
-    tag: "home food, the everyday plate",
-    cols: 2,
-    items: [
-      { name: "Roti + Sabji", sym: "heart",   desc: "Fresh flatbread & whatever sabji the week brings." },
-      { name: "Dal Chawal",   sym: "heart",   desc: "Comfort in a bowl. Tempered dal over rice." },
-      { name: "Kadhi Chawal", sym: "heart",   desc: "Silky yogurt & gram-flour curry with rice." },
-      { name: "Dal Bati",     sym: "diamond", desc: "Batis crisped in the air fryer, served with dal." },
-      { name: "Pav Bhaji",    sym: "diamond", desc: "Buttery mashed-veg curry with soft pav." },
-      { name: "Paneer Bhurji",sym: "diamond", desc: "Scrambled paneer, onions & masala." },
-      { name: "Tofu Rajma Curry", isNew: true, desc: "Kidney beans & tofu in a thick, slow gravy." },
-      { name: "Dal, Toasted Jeera Tadka", isNew: true, desc: "Extra-nutty cumin tempering poured over." }
+
+  dinner: {
+    label:"Dinner", kick:"home food & the pasta bar", illo:"pasta",
+    bg:"#2fb56b",
+    groups:[
+      { origin:"Ghar Ka Khaana", tag:"North Indian · the everyday plate", bg:"#2fb56b", ink:"#fff6df", illo:"bowl", wide:true,
+        items:[
+          {name:"Roti + Sabji", sym:"heart", desc:"Fresh flatbread & whatever sabji the week brings."},
+          {name:"Dal Chawal", sym:"heart", desc:"Comfort in a bowl. Tempered dal over rice."},
+          {name:"Kadhi Chawal", sym:"heart", desc:"Silky yogurt & gram-flour curry with rice."},
+          {name:"Dal Bati", sym:"diamond", desc:"Batis crisped in the air fryer, served with dal."},
+          {name:"Pav Bhaji", sym:"diamond", desc:"Buttery mashed-veg curry with soft pav."},
+          {name:"Paneer Bhurji", sym:"diamond", desc:"Scrambled paneer, onions & masala."},
+          {name:"Tofu Rajma Curry", isNew:true, desc:"Kidney beans & tofu in a thick, slow gravy."},
+          {name:"Dal, Toasted Jeera Tadka", isNew:true, desc:"Extra-nutty cumin tempering poured over."},
+        ]},
+      { origin:"Italian · Pasta Bar", tag:"stovetop only · no oven", bg:"#f0503c", ink:"#fff6df", illo:"pasta",
+        items:[
+          {name:"Pesto Pasta", sym:"diamond", desc:"Basil-forward, sharp & green."},
+          {name:"Cream Pasta", sym:"diamond", desc:"White sauce, garlic, all comfort."},
+          {name:"Red Sauce Pasta", sym:"diamond", desc:"Slow tomato sauce with herbs."},
+          {name:"Creamy Farfalle", isNew:true, desc:"Bow-ties in a velvety sauce."},
+          {name:"Stuffed Pesto Shells", isNew:true, desc:"Cooked in the skillet, never baked."},
+        ]},
     ]
   },
-  {
-    title: "Pasta Bar",
-    tag: "stovetop only · no oven needed",
-    cols: 2,
-    items: [
-      { name: "Pesto Pasta",     sym: "diamond", desc: "Basil-forward, sharp & green." },
-      { name: "Cream Pasta",     sym: "diamond", desc: "White sauce, garlic, all comfort." },
-      { name: "Red Sauce Pasta", sym: "diamond", desc: "Slow tomato sauce with herbs." },
-      { name: "Creamy Farfalle", isNew: true, desc: "Bow-ties in a velvety sauce." },
-      { name: "Stuffed Pesto Shells", isNew: true, desc: "Cooked in the skillet, never baked." }
-    ]
-  },
-  {
-    title: "Between Breads",
-    tag: "sandwiches, wraps & toasts",
-    cols: 2,
-    items: [
-      { name: "House Sandwich", sym: "diamond", desc: "The signature stack, built your way." },
-      { name: "Paneer Shawarma Wrap", isNew: true, desc: "Air-fried crispy paneer, garlic sauce, rolled tight." },
-      { name: "Spicy Korean Sandwich", isNew: true, desc: "Paneer edition — sweet heat & crunch." },
-      { name: "Bean Patty Sandwich", isNew: true, desc: "House-made bean patty, properly stacked." },
-      { name: "Paneer Tikka Garlic Bread", isNew: true, desc: "Tawa-style, smoky paneer on garlic bread." },
-      { name: "Bruschetta", isNew: true, desc: "Tawa-toasted under a lid. High-protein topping." }
-    ]
-  },
-  {
-    title: "Bowls & Small Plates",
-    tag: "high-protein, one-bowl meals",
-    cols: 2,
-    items: [
-      { name: "Thai Tofu Bowl",  isNew: true, desc: "Coconut-lime & tofu. About 30g protein." },
-      { name: "Gobhi Steak Bowl",isNew: true, desc: "Seared cauliflower steak. About 27g protein." },
-      { name: "Steamed Momos",   isNew: true, desc: "Hand-pleated & steamed, with a fiery dip." },
-      { name: "Dahi Vada",       isNew: true, desc: "Steamed never fried. Cool yogurt & chutney." }
+
+  drinks: {
+    label:"Drinks", kick:"brews by day · cocktails by night", illo:"cocktail",
+    bg:"#a97bf0",
+    groups:[
+      { origin:"Brews", tag:"iced or hot", bg:"#d98a4e", ink:"#2a1606", illo:"coffee",
+        items:[ {name:"Coffee"}, {name:"Matcha"} ] },
+      { origin:"Gin", tag:"crisp & botanical", bg:"#2ec4b6", ink:"#0d2b27", illo:"cocktail",
+        items:[ {name:"Gin & Tonic"}, {name:"Gimlet"} ] },
+      { origin:"Whiskey", tag:"warm & smoky", bg:"#e8a13a", ink:"#2a1606", illo:"cocktail",
+        items:[ {name:"Whiskey Sour"}, {name:"Old Fashioned"} ] },
+      { origin:"Vodka", tag:"bright & buzzy", bg:"#7c83ff", ink:"#101138", illo:"cocktail",
+        items:[ {name:"Moscow Mule"}, {name:"Espresso Martini"} ] },
     ]
   }
-];
+};
 
 const COUNTER = {
-  title: "The Condiment Counter",
-  tag: "made in-house · ask for a spoon",
-  items: [
-    { name: "Hummus", sym: "heart" },
-    { name: "Pudina Chutney" },
-    { name: "Thecha Butter" },
-    { name: "Hot Honey Butter" },
-    { name: "Roasted Red Pepper Protein Sauce" },
-    { name: "The 8 Protein Sauces", note: "yogurt-based" },
-    { name: "House Ginger-Garlic Paste" }
+  origin:"The Condiment Counter", tag:"made in-house · ask for a spoon", bg:"#a97bf0", ink:"#1c0f3a", illo:"chilli",
+  items:[
+    {name:"Hummus", sym:"heart"}, {name:"Pudina Chutney"}, {name:"Thecha Butter"},
+    {name:"Hot Honey Butter"}, {name:"Roasted Red Pepper Sauce"},
+    {name:"The 8 Protein Sauces", note:"yogurt-based"}, {name:"House Ginger-Garlic Paste"},
   ]
 };
 
 const SWEET = {
-  title: "Sweet Ending",
-  name: "4-Ingredient Chocolate Pudding",
-  desc: "No-bake, set cold. Four things and nothing else.",
-  isNew: true
+  origin:"Sweet Ending", tag:"one, done well", bg:"#ff5da2", ink:"#fff6df", illo:"mascot",
+  name:"4-Ingredient Chocolate Pudding", isNew:true,
+  desc:"No-bake, set cold. Four things and nothing else."
 };
 
-const BAR = {
-  title: "Bar & Brew",
-  groups: [
-    { label: "Brews",   items: [ ["Coffee",""], ["Matcha",""] ] },
-    { label: "Gin",     items: [ ["Gin & Tonic",""], ["Gimlet",""] ] },
-    { label: "Whiskey", items: [ ["Whiskey Sour",""], ["Old Fashioned",""] ] },
-    { label: "Vodka",   items: [ ["Moscow Mule",""], ["Espresso Martini",""] ] }
-  ]
-};
-
-/* ===========================================================================
+/* ============================================================================
    RENDER
-   =========================================================================== */
-const SYM = { diamond: "◆", heart: "♥" };
+   ============================================================================ */
+const SYM = { diamond:"◆", heart:"♥" };
+const isLight = ink => /^#f/i.test(ink);   // cream inks start with #f...
 
-function dishHTML(d) {
-  const sym = d.sym ? `<span class="dish__sym">${SYM[d.sym]}</span>` : "";
-  const nw  = d.isNew ? ` <span class="dish__new">(new)</span>` : "";
-  return `
-    <div class="dish">
-      <div class="dish__line">
-        <span class="dish__name">${d.name}${nw}</span>
-        ${sym}
-        <span class="dish__lead"></span>
-      </div>
-      ${d.desc ? `<div class="dish__desc">${d.desc}</div>` : ""}
-    </div>`;
-}
-
-function sectionHTML(sec, no) {
-  const dishes = sec.items.map(dishHTML).join("");
-  return `
-    <div class="section">
-      <div class="section__head">
-        <span class="section__no">${String(no).padStart(2,"0")}</span>
-        <h2 class="section__title">${sec.title}</h2>
-        <span class="section__dots"></span>
-        <span class="section__tag">${sec.tag}</span>
-      </div>
-      <div class="dishes ${sec.cols === 2 ? "cols-2" : ""}">${dishes}</div>
-    </div>`;
-}
-
-function masthead(pg) {
-  return `<div class="masthead">
-    <span class="masthead__name">The Daily</span>
-    <span class="masthead__pg">Pranjal's Kitchen · ${pg}</span>
+function itemHTML(d){
+  const sym = d.sym ? `<i class="b b--${d.sym==='diamond'?'d':'h'}">${SYM[d.sym]}</i>` : "";
+  const nw  = d.isNew ? `<span class="new">new</span>` : "";
+  return `<div class="it">
+    <div class="it__top"><span class="it__name">${d.name}</span>${sym}${nw}</div>
+    ${d.desc ? `<div class="it__desc">${d.desc}</div>` : ""}
   </div>`;
 }
 
-function crops() {
-  return `<span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>`;
+function cardHTML(g){
+  const two = (g.wide && g.items.length > 4) ? " two" : "";
+  return `<div class="card ${g.wide?'card--wide':''}" style="--bg:${g.bg};--ink:${g.ink}">
+    <div class="card__illo">${ILLO[g.illo]||""}</div>
+    <div class="card__title">${g.origin}</div>
+    <div class="card__tag">${g.tag}</div>
+    <div class="card__items${two}">${g.items.map(itemHTML).join("")}</div>
+  </div>`;
 }
 
-function page(inner, cls="") {
-  return `<div class="page ${cls}">${crops()}<div class="page__inner">${inner}</div></div>`;
+function bannerHTML(meal){
+  return `<div class="banner" style="background:${meal.bg}">
+    <div>
+      <div class="banner__title">${meal.label.toUpperCase()}</div>
+      <div class="banner__kick">${meal.kick}</div>
+    </div>
+    <div class="banner__illo">${ILLO[meal.illo]}</div>
+  </div>`;
 }
 
-/* ---- Cover ---- */
+function counterHTML(){
+  const run = COUNTER.items.map(c=>{
+    const sym = c.sym ? `<i class="b b--h">♥</i>` : "";
+    const note = c.note ? ` <em>(${c.note})</em>` : "";
+    return `${c.name}${sym}${note}`;
+  }).join('<span class="dot">✦</span>');
+  return `<div class="card card--wide" style="--bg:${COUNTER.bg};--ink:${COUNTER.ink}">
+    <div class="card__illo">${ILLO[COUNTER.illo]}</div>
+    <div class="card__title">${COUNTER.origin}</div>
+    <div class="card__tag">${COUNTER.tag}</div>
+    <div class="counter">${run}</div>
+  </div>`;
+}
+
+function sweetHTML(){
+  return `<div class="card feature" style="--bg:${SWEET.bg};--ink:${SWEET.ink}">
+    <div class="card__illo">${ILLO[SWEET.illo]}</div>
+    <div class="card__title">${SWEET.origin}</div>
+    <div class="feature__name">${SWEET.name} <span class="new">new</span></div>
+    <div class="feature__desc">${SWEET.desc}</div>
+  </div>`;
+}
+
+function drinkCardHTML(g){
+  const rows = g.items.map(d=>`<div class="drink"><span class="drink__name">${d.name}</span><span class="drink__lead"></span></div>`).join("");
+  return `<div class="card" style="--bg:${g.bg};--ink:${g.ink}">
+    <div class="card__illo">${ILLO[g.illo]||""}</div>
+    <div class="card__title">${g.origin}</div>
+    <div class="card__tag">${g.tag}</div>
+    <div class="card__items" style="gap:2mm">${rows}</div>
+  </div>`;
+}
+
+function foot(pg){ return `<div class="foot"><span>THE DAILY · PRANJAL'S KITCHEN</span><span>${pg}</span></div>`; }
+
+function page(inner, cls="", sparks=""){
+  return `<div class="page ${cls}">${sparks}<div class="page__in">${inner}</div></div>`;
+}
+
+/* ---- COVER ---- */
 const cover = page(`
-  <div class="cover__top">
-    <span>Est. Daily</span>
-    <span>Veg · Air-Fryer · Hinglish</span>
-  </div>
-  <div class="cover__mid">
-    <div class="cover__kicker">Pranjal's Kitchen presents</div>
-    <h1 class="cover__title">THE<br>DAILY</h1>
-    <p class="cover__sub">A café-style menu of everything I cook — the weekly staples, the house specials, and every reel I couldn't stop thinking about.</p>
-    <div class="cover__rule"></div>
-    <div class="cover__profile">
-      <div><b>The Diet</b>${PROFILE.diet}</div>
-      <div><b>The Kitchen</b>${PROFILE.kitchen}</div>
-      <div><b>The Regular</b>${PROFILE.breakfast}</div>
-      <div><b>The Table</b>${PROFILE.cook}</div>
-    </div>
-  </div>
-  <div class="cover__foot">
+  <div class="cover__frame">
+    ${sparkle("6mm","8mm",9,"#ffd23c")}
+    ${sparkle("120mm","4mm",7,"#59b7f5")}
+    ${sparkle("150mm","70mm",11,"#2fb56b")}
+    <div class="cover__ribbon">✦ Pranjal's Kitchen · Est. Daily</div>
+    <div class="cover__logo"><span class="l1">THE</span><span class="l2">DAILY</span></div>
+    <div class="cover__tag">A café-style menu of everything I cook — weekly staples, house specials &amp; every reel I couldn't stop thinking about.</div>
+    <div class="cover__ritual">☀ <b>The Regular:</b> most mornings begin with Greek yogurt, muesli &amp; an apple. Everything else is served all day.</div>
+    <div class="cover__spacer"></div>
     <div class="legend">
-      <span><span class="sym">◆</span> House special</span>
-      <span><span class="sym">♥</span> For two</span>
-      <span><span class="sym-new">(new)</span> Saved, not yet in rotation</span>
+      <span class="chip"><span class="s b--d">◆</span> House special · solo</span>
+      <span class="chip"><span class="s b--h">♥</span> For two · shared</span>
+      <span class="chip"><span class="new">new</span> Saved, not yet in rotation</span>
     </div>
-    <span>A4 · v1</span>
+    <div class="cover__foot"><span>VEG · AIR-FRYER · HINGLISH</span><span>A4 · v2</span></div>
   </div>
 `, "cover");
 
-/* ---- Content pages ---- */
-/* Page 2: Breakfast + Ghar Ka Khaana */
-const p2 = page(
-  masthead("Breakfast & Home") +
-  sectionHTML(MENU[0], 1) +
-  sectionHTML(MENU[1], 2)
+/* ---- LUNCH ① ---- */
+const L = CATALOGUE.lunch;
+const lunch1 = page(
+  bannerHTML(L) +
+  `<div class="cards">${L.groups.map(cardHTML).join("")}</div>` +
+  foot("Lunch · 1 of 2"),
+  "", sparkle("176mm","150mm",8,"#ff6fae")+sparkle("6mm","240mm",7,"#34c7b5")
 );
 
-/* Page 3: Pasta + Between Breads */
-const p3 = page(
-  masthead("Pasta & Breads") +
-  sectionHTML(MENU[2], 3) +
-  sectionHTML(MENU[3], 4)
+/* ---- LUNCH ② ---- */
+const lunch2 = page(
+  `<div class="banner" style="background:${L.bg}">
+     <div><div class="banner__title" style="font-size:26pt">LUNCH, cont.</div>
+     <div class="banner__kick">between breads &amp; big bowls</div></div>
+     <div class="banner__illo">${ILLO.bowl}</div></div>` +
+  `<div class="cards">${L.groups2.map(cardHTML).join("")}${counterHTML()}</div>` +
+  foot("Lunch · 2 of 2"),
+  "", sparkle("172mm","120mm",9,"#ffd23c")
 );
 
-/* Page 4: Bowls + Condiment Counter */
-const counterItems = COUNTER.items.map(c => {
-  const sym = c.sym ? `<span class="dish__sym">${SYM[c.sym]}</span>` : "";
-  const note = c.note ? ` <span style="font-size:9pt;font-style:italic;color:var(--faded)">(${c.note})</span>` : "";
-  return `<b>${c.name}</b>${sym}${note}`;
-}).join('<span class="dot">·</span>');
-
-const p4 = page(
-  masthead("Bowls & Counter") +
-  sectionHTML(MENU[4], 5) +
-  `<div class="section">
-    <div class="section__head">
-      <span class="section__no">06</span>
-      <h2 class="section__title">${COUNTER.title}</h2>
-      <span class="section__dots"></span>
-      <span class="section__tag">${COUNTER.tag}</span>
-    </div>
-    <div class="counter">${counterItems}</div>
-  </div>`
+/* ---- DINNER ---- */
+const D = CATALOGUE.dinner;
+const dinner = page(
+  bannerHTML(D) +
+  `<div class="cards">${cardHTML(D.groups[0])}${cardHTML(D.groups[1])}${sweetHTML()}</div>` +
+  foot("Dinner"),
+  "", sparkle("178mm","60mm",8,"#f0503c")+sparkle("8mm","250mm",7,"#ffd23c")
 );
 
-/* Page 5: Sweet Ending + Bar & Brew */
-const barHTML = BAR.groups.map(g => `
-  <div class="bar__group">
-    <b>${g.label}</b>
-    <ul>${g.items.map(i => `<li>${i[0]}${i[1] ? ` <span>${i[1]}</span>` : ""}</li>`).join("")}</ul>
-  </div>`).join("");
-
-const p5 = page(
-  masthead("Sweet & Bar") +
-  `<div class="section">
-    <div class="section__head">
-      <span class="section__no">07</span>
-      <h2 class="section__title">${SWEET.title}</h2>
-      <span class="section__dots"></span>
-      <span class="section__tag">one, done well</span>
-    </div>
-    <div class="feature">
-      <div class="feature__name">${SWEET.name} <span class="dish__new" style="font-size:13pt">(new)</span></div>
-      <div class="feature__desc">${SWEET.desc}</div>
-    </div>
-  </div>` +
-  `<div class="section">
-    <div class="section__head">
-      <span class="section__no">08</span>
-      <h2 class="section__title">${BAR.title}</h2>
-      <span class="section__dots"></span>
-      <span class="section__tag">gin · whiskey · vodka</span>
-    </div>
-    <div class="bar">${barHTML}</div>
-  </div>` +
-  `<div class="colophon">
-    The Daily · Pranjal's home kitchen · Vegetarian · Cooked on stovetop &amp; air fryer<br>
-    Draft v1 — visual direction to be set from reference · Set your own two inks in the CSS variables
-  </div>`
+/* ---- DRINKS ---- */
+const DR = CATALOGUE.drinks;
+const drinks = page(
+  bannerHTML(DR) +
+  `<div class="cards">${DR.groups.map(drinkCardHTML).join("")}</div>` +
+  `<div class="closing">
+     <div style="width:30mm;flex:none">${ILLO.mascot}</div>
+     <div class="closing__txt"><b>That's the menu!</b><br>Cocktails are a starting list — only rule is gin, whiskey or vodka. Tell the kitchen what you're feeling.</div>
+   </div>` +
+  foot("Drinks"),
+  "", sparkle("174mm","150mm",9,"#7c83ff")+sparkle("10mm","30mm",7,"#2ec4b6")
 );
 
-document.getElementById("book").innerHTML = cover + p2 + p3 + p4 + p5;
+document.getElementById("book").innerHTML = cover + lunch1 + lunch2 + dinner + drinks;
 </script>
