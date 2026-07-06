@@ -1,18 +1,16 @@
 <!--
-  THE DAILY — My Menu  ·  vibrant / retro-sticker edition
+  THE DAILY — My Menu  ·  berry-much / watercolour-market edition (v3)
   A print-ready, café-style menu of everything Pranjal cooks.
 
-  HOW TO PRINT
-  ------------
-  Open in Chrome → Cmd/Ctrl+P → "Save as PDF".
-  Paper: A4 · Margins: None/Default · Background graphics: ON.
+  PRINT :  open in Chrome → Cmd/Ctrl+P → Save as PDF. A4 · background graphics ON.
 
-  HOW TO EDIT
-  -----------
-  All dishes live in the CATALOGUE object in the <script> at the bottom.
-  Structure: meal (Lunch/Dinner/Drinks) → cuisine group → items.
-  Each group has its own box colour (`bg`), text colour (`ink`) and an
-  illustration key (`illo`). Change data there; the layout redraws itself.
+  FONTS :  headings use "Pansy", sub-headings use "Tulip".
+           Drop the real font files into ./fonts/ (see fonts/README.md) and they
+           activate automatically. Until then, Baloo 2 / Fredoka stand in.
+
+  EDIT  :  every dish lives in the CATALOGUE object in the <script> below.
+           Each cuisine group carries its own card colour (`pastel`), heading
+           colour (`hue`) and illustration key (`illo`). Change data, not layout.
 
   Symbols:  ◆ house special (solo)   ♥ for two (shared)   NEW = saved, not yet in rotation
 -->
@@ -21,180 +19,148 @@
 <title>THE DAILY — My Menu</title>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,500;0,700;0,800;0,900;1,600;1,700&display=swap');
+  /* real display fonts (drop-in) ------------------------------------------- */
+  @font-face{ font-family:"Pansy"; src:url("fonts/Pansy.woff2") format("woff2"), url("fonts/Pansy.ttf") format("truetype"); font-display:swap; }
+  @font-face{ font-family:"Tulip"; src:url("fonts/Tulip.woff2") format("woff2"), url("fonts/Tulip.ttf") format("truetype"); font-display:swap; }
+  /* fallbacks + body ------------------------------------------------------- */
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&display=swap');
 
   :root{
-    --outline: #241b2e;          /* shared dark outline + hard shadow  */
-    --shadow: 5px 5px 0 var(--outline);
-    --shadow-sm: 3px 3px 0 var(--outline);
-    --page-bg: #fff;             /* set below */
-    --cream: #fff6df;
+    /* berry-much pastels */
+    --butter:#fef7c5; --pink:#ffb4da; --mint:#d5ffc9; --cream:#fff8e9;
+    --lilac:#f5d1ef; --sky:#bcd3f9; --blush:#fff4fd; --peach:#ffcbbf;
 
-    --display: "Bungee", system-ui, sans-serif;   /* chunky retro   */
-    --round:   "Fredoka", system-ui, sans-serif;  /* bubbly rounded */
-    --body:    "Nunito", system-ui, sans-serif;   /* clean sans     */
+    --paper:#fff8e9;            /* page background */
+    --ink:#3b2f36;             /* warm near-black body text */
+    --ink-soft:#7a6b72;
 
-    --page-w: 210mm;
-    --page-h: 297mm;
-    --pad: 13mm;
+    --head:"Pansy","Baloo 2",system-ui,sans-serif;    /* headings     */
+    --sub:"Tulip","Fredoka",system-ui,sans-serif;     /* sub-headings */
+    --body:"Nunito",system-ui,sans-serif;             /* body         */
+
+    --gingham:#8fb3ec;         /* blue check motif */
+
+    --page-w:210mm; --page-h:297mm; --pad:13mm;
   }
-
-  *{ box-sizing: border-box; }
-  html{ background:#e9c8dd; }
-  body{ margin:0; font-family:var(--body); color:var(--outline); -webkit-font-smoothing:antialiased; }
+  *{ box-sizing:border-box; }
+  html{ background:#e7d9c4; }
+  body{ margin:0; font-family:var(--body); color:var(--ink); -webkit-font-smoothing:antialiased; }
 
   /* ---------------------------------------------------------------- page */
   .page{
-    position:relative;
-    width:var(--page-w);
-    height:var(--page-h);
-    margin:9mm auto;
-    padding:var(--pad);
-    overflow:hidden;
-    background:#fff7e6;
-    background-image:
-      radial-gradient(circle at 12% 88%, #ffe1ef 0 0),
-      radial-gradient(#ffd9a8 1.1px, transparent 1.2px);
-    background-size: 100% 100%, 16px 16px;
-    box-shadow:0 8px 34px rgba(0,0,0,.25);
+    position:relative; width:var(--page-w); height:var(--page-h);
+    margin:9mm auto; padding:var(--pad); overflow:hidden;
+    background:var(--paper);
+    background-image:radial-gradient(#efe4cf 1px, transparent 1.3px);
+    background-size:15px 15px;
+    box-shadow:0 8px 34px rgba(0,0,0,.22);
   }
   .page__in{ position:relative; height:100%; z-index:2; display:flex; flex-direction:column; }
-
-  /* scattered sparkle stars (decoration layer) */
   .spark{ position:absolute; z-index:1; pointer-events:none; }
 
-  /* ---------------------------------------------------------------- cover */
-  .cover{ background:#ff4f9a;
+  /* blue gingham motif */
+  .gingham{
+    background-color:transparent;
     background-image:
-      radial-gradient(circle at 50% 50%, rgba(255,255,255,.16) 0 0),
-      radial-gradient(rgba(255,255,255,.35) 1.4px, transparent 1.5px);
-    background-size:100% 100%, 20px 20px;
+      linear-gradient(45deg, var(--gingham) 25%, transparent 25% 75%, var(--gingham) 75%),
+      linear-gradient(45deg, var(--gingham) 25%, transparent 25% 75%, var(--gingham) 75%);
+    background-size:14px 14px; background-position:0 0, 7px 7px;
+    opacity:.9;
   }
+
+  /* ---------------------------------------------------------------- cover */
+  .cover{ background:var(--pink); background-image:radial-gradient(rgba(255,255,255,.5) 1.3px, transparent 1.4px); background-size:16px 16px; }
   .cover__frame{
-    flex:1; border:3px solid var(--outline); border-radius:26px;
-    background:#fff6df; box-shadow:var(--shadow);
-    padding:12mm 11mm; display:flex; flex-direction:column; position:relative; overflow:hidden;
+    flex:1; border:3px solid #fff; border-radius:30px; background:var(--cream);
+    box-shadow:0 10px 0 rgba(255,138,180,.45), 0 12px 30px rgba(0,0,0,.12);
+    padding:11mm 11mm 17mm; display:flex; flex-direction:column; position:relative; overflow:hidden;
   }
+  .cover__check{ position:absolute; inset:auto 0 0 0; height:9mm; }
   .cover__ribbon{
-    align-self:flex-start;
-    font-family:var(--round); font-weight:700; font-size:11pt; letter-spacing:.02em;
-    background:#ffd23c; color:var(--outline);
-    border:3px solid var(--outline); border-radius:999px;
-    padding:3px 16px; box-shadow:var(--shadow-sm);
+    align-self:flex-start; font-family:var(--sub); font-weight:600; font-size:12pt;
+    background:var(--sky); color:#2f4a86; border-radius:999px; padding:4px 18px;
+    box-shadow:0 3px 0 rgba(120,150,210,.5);
   }
-  .cover__logo{
-    font-family:var(--display); line-height:.92; letter-spacing:.01em;
-    font-size:82pt; margin:8mm 0 0;
-  }
-  .cover__logo .l1{ color:#ff4f9a; }
-  .cover__logo .l2{ color:#2fb56b; }
-  .cover__logo .l1, .cover__logo .l2{
-    -webkit-text-stroke:2.5px var(--outline); text-shadow:4px 4px 0 var(--outline);
-    display:block;
-  }
-  .cover__tag{
-    font-family:var(--round); font-style:italic; font-weight:500;
-    font-size:16pt; margin-top:7mm; max-width:135mm; line-height:1.35; color:var(--outline);
-  }
+  .cover__logo{ font-family:var(--head); line-height:.9; font-size:86pt; margin:9mm 0 0; letter-spacing:.01em; }
+  .cover__logo span{ display:inline-block; }
+  .cover__logo .r2{ display:block; }
+  .cover__tag{ font-family:var(--sub); font-weight:500; font-size:16pt; color:var(--ink); margin-top:7mm; max-width:140mm; line-height:1.4; }
   .cover__ritual{
-    margin-top:6mm; background:#59b7f5; color:var(--outline);
-    border:3px solid var(--outline); border-radius:16px; box-shadow:var(--shadow-sm);
-    padding:5mm 6mm; font-family:var(--body); font-weight:700; font-size:11pt; max-width:120mm;
+    margin-top:6mm; align-self:flex-start; max-width:125mm;
+    background:var(--mint); border-radius:18px; padding:5mm 6mm;
+    font-family:var(--body); font-weight:700; font-size:11pt; color:#38602c;
+    box-shadow:0 4px 0 rgba(150,200,140,.5);
   }
-  .cover__ritual b{ font-family:var(--round); }
+  .cover__ritual b{ font-family:var(--sub); font-weight:600; }
   .cover__spacer{ flex:1; }
   .legend{ display:flex; flex-wrap:wrap; gap:5mm; }
   .legend .chip{
-    display:inline-flex; align-items:center; gap:6px;
-    background:#fff; color:var(--outline);
-    border:2.5px solid var(--outline); border-radius:999px;
-    padding:4px 13px; font-family:var(--body); font-weight:800; font-size:9.5pt;
-    box-shadow:2px 2px 0 var(--outline);
+    display:inline-flex; align-items:center; gap:7px; background:#fff; color:var(--ink);
+    border-radius:999px; padding:5px 15px; font-family:var(--body); font-weight:800; font-size:9.5pt;
+    box-shadow:0 3px 0 rgba(0,0,0,.06);
   }
   .legend .chip .s{ font-size:12pt; line-height:1; }
-  .cover__foot{
-    margin-top:6mm; display:flex; justify-content:space-between; align-items:center;
-    font-family:var(--display); font-size:9pt; letter-spacing:.06em; color:var(--outline);
-  }
+  .cover__foot{ margin-top:6mm; display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--sub); font-weight:600; font-size:10pt; color:var(--ink-soft); }
 
   /* ------------------------------------------------------------- banners */
   .banner{
-    display:flex; align-items:center; gap:6mm;
-    border:3px solid var(--outline); border-radius:20px; box-shadow:var(--shadow);
-    padding:5mm 8mm; margin-bottom:7mm; position:relative;
+    display:flex; align-items:center; gap:6mm; border-radius:24px; padding:5mm 8mm; margin-bottom:7mm;
+    position:relative; box-shadow:0 5px 0 rgba(0,0,0,.06); overflow:hidden;
   }
-  .banner__title{ font-family:var(--display); font-size:34pt; line-height:.9; color:var(--outline); }
-  .banner__kick{ font-family:var(--round); font-weight:600; font-size:11pt; opacity:.85; margin-top:1mm; }
-  .banner__illo{ margin-left:auto; }
+  .banner__check{ position:absolute; inset:0 0 0 auto; width:34mm; opacity:.5; }
+  .banner__title{ font-family:var(--head); font-size:38pt; line-height:.9; position:relative; }
+  .banner__kick{ font-family:var(--sub); font-weight:500; font-size:12pt; color:var(--ink); opacity:.8; margin-top:1mm; }
+  .banner__illo{ margin-left:auto; position:relative; }
   .banner__illo svg{ width:26mm; height:26mm; display:block; }
 
   /* --------------------------------------------------------------- cards */
   .cards{ display:grid; grid-template-columns:1fr 1fr; gap:7mm; align-content:start; }
   .card{
-    --bg:#fff; --ink:var(--outline);
-    background:var(--bg); color:var(--ink);
-    border:3px solid var(--outline); border-radius:18px; box-shadow:var(--shadow);
-    padding:6mm 6mm 6mm; position:relative; overflow:hidden;
-    break-inside:avoid;
+    --pastel:#fff; --hue:#3b2f36;
+    background:var(--pastel); border:2.5px solid var(--hue); border-radius:22px;
+    box-shadow:0 5px 0 color-mix(in srgb, var(--hue) 28%, transparent);
+    padding:6mm; position:relative; overflow:hidden; break-inside:avoid;
   }
   .card--wide{ grid-column:1 / -1; }
-  .card__illo{ position:absolute; top:-3mm; right:-3mm; opacity:.9; }
-  .card__illo svg{ width:24mm; height:24mm; display:block; }
-  .card__title{
-    font-family:var(--round); font-weight:700; font-size:19pt; line-height:1;
-    color:var(--ink); padding-right:20mm;
-  }
-  .card__tag{
-    font-family:var(--body); font-weight:800; font-size:8pt; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--ink); opacity:.72; margin:1.5mm 0 4mm;
-  }
+  .card__illo{ position:absolute; top:2mm; right:2mm; }
+  .card__illo svg{ width:22mm; height:22mm; display:block; }
+  .card__title{ font-family:var(--sub); font-weight:600; font-size:20pt; line-height:1; color:var(--hue); padding-right:20mm; }
+  .card__tag{ font-family:var(--body); font-weight:800; font-size:8pt; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--hue); opacity:.7; margin:2mm 0 4mm; }
   .card__items{ display:grid; grid-template-columns:1fr; gap:3mm; }
   .card__items.two{ grid-template-columns:1fr 1fr; gap:3mm 8mm; }
 
   .it{ break-inside:avoid; }
   .it__top{ display:flex; align-items:baseline; gap:2mm; flex-wrap:wrap; }
   .it__name{ font-family:var(--body); font-weight:900; font-size:11.5pt; color:var(--ink); line-height:1.05; }
-  .it__desc{ font-family:var(--body); font-weight:600; font-style:italic; font-size:8.8pt; line-height:1.28;
-             color:var(--ink); opacity:.78; margin-top:.6mm; }
+  .it__desc{ font-family:var(--body); font-weight:600; font-style:italic; font-size:8.8pt; line-height:1.28; color:var(--ink); opacity:.72; margin-top:.5mm; }
 
-  /* badges */
   .b{ font-style:normal; font-size:11pt; line-height:1; }
-  .b--d{ color:#e0452c; }              /* diamond ◆ */
-  .b--h{ color:#ff2e88; }              /* heart ♥   */
-  .card[style*="--ink:#fff"] .b--d,
-  .card[style*="--ink: #fff"] .b--d{ color:#ffd23c; }
-  .new{
-    font-family:var(--body); font-style:normal; font-weight:900; font-size:6.5pt; letter-spacing:.08em;
-    background:var(--outline); color:#fff; border-radius:999px; padding:1.5px 6px; text-transform:uppercase;
-    position:relative; top:-1px;
-  }
+  .b--d{ color:#d64b32; }   /* ◆ tomato */
+  .b--h{ color:#d6417b; }   /* ♥ raspberry */
+  .new{ font-family:var(--body); font-weight:900; font-size:6.5pt; letter-spacing:.08em; text-transform:uppercase;
+    background:var(--hue); color:#fff; border-radius:999px; padding:1.5px 6px; position:relative; top:-1px; }
 
-  /* counter strip (inline run) */
   .counter{ font-family:var(--body); font-weight:800; font-size:11.5pt; line-height:1.85; color:var(--ink); }
-  .counter .dot{ color:var(--ink); opacity:.5; margin:0 3mm; }
-  .counter em{ font-weight:700; font-size:8.5pt; opacity:.75; }
+  .counter .dot{ color:var(--hue); margin:0 2.5mm; }
+  .counter em{ font-weight:700; font-size:8.5pt; opacity:.7; }
 
-  /* sweet feature */
   .feature{ text-align:center; }
   .feature .card__title{ padding:0; }
-  .feature__name{ font-family:var(--round); font-weight:700; font-size:17pt; margin-top:2mm; color:var(--ink); }
-  .feature__desc{ font-family:var(--body); font-style:italic; font-weight:700; font-size:10.5pt; opacity:.82; margin-top:2mm; color:var(--ink); }
+  .feature__name{ font-family:var(--sub); font-weight:600; font-size:17pt; margin-top:2mm; color:var(--ink); }
+  .feature__desc{ font-family:var(--body); font-style:italic; font-weight:700; font-size:10.5pt; opacity:.78; margin-top:2mm; }
 
-  /* drinks list rows */
   .drink{ display:flex; align-items:baseline; gap:2mm; }
   .drink__name{ font-family:var(--body); font-weight:900; font-size:12pt; color:var(--ink); }
-  .drink__lead{ flex:1; border-bottom:2px dotted currentColor; opacity:.4; margin:0 1mm 1.4mm; }
+  .drink__lead{ flex:1; border-bottom:2px dotted var(--hue); opacity:.45; margin:0 1mm 1.4mm; }
 
-  .closing{
-    margin-top:auto; display:flex; align-items:center; gap:6mm;
-    border-top:3px dashed var(--outline); padding-top:5mm;
-  }
-  .closing__txt{ font-family:var(--round); font-weight:600; font-size:11pt; line-height:1.4; }
-  .closing__txt b{ font-family:var(--display); font-size:12pt; }
+  .closing{ margin-top:auto; display:flex; align-items:center; gap:6mm; border-top:2.5px dashed #e6b7cf; padding-top:5mm; }
+  .closing__txt{ font-family:var(--sub); font-weight:500; font-size:11.5pt; line-height:1.4; }
+  .closing__txt b{ font-family:var(--head); font-size:13pt; color:#d6417b; }
 
-  /* running foot */
-  .foot{ margin-top:5mm; font-family:var(--display); font-size:7.5pt; letter-spacing:.05em; color:var(--outline); opacity:.7;
-         display:flex; justify-content:space-between; }
+  .foot{ margin-top:5mm; font-family:var(--sub); font-weight:600; font-size:8.5pt; color:var(--ink-soft);
+    display:flex; justify-content:space-between; }
 
   /* ---------------------------------------------------------------- print */
   @page{ size:A4; margin:0; }
@@ -204,10 +170,8 @@
     .page:last-child{ page-break-after:auto; }
     .no-print{ display:none !important; }
   }
-  .toolbar{
-    position:fixed; top:12px; right:12px; z-index:99; font-family:var(--body); font-weight:800; font-size:11px;
-    background:var(--outline); color:#ffd23c; padding:8px 12px; border-radius:999px; box-shadow:3px 3px 0 #ff4f9a;
-  }
+  .toolbar{ position:fixed; top:12px; right:12px; z-index:99; font-family:var(--body); font-weight:800; font-size:11px;
+    background:#fff; color:#d6417b; padding:8px 12px; border-radius:999px; box-shadow:0 3px 0 rgba(214,65,123,.35); }
 </style>
 
 <div class="toolbar no-print">print → Cmd/Ctrl + P</div>
@@ -215,95 +179,118 @@
 
 <script>
 /* ============================================================================
-   ILLUSTRATIONS — simple flat inline SVGs, shared dark outline
+   ILLUSTRATIONS — soft painterly fruit / food SVGs (no hard black outline)
    ============================================================================ */
-const OL = "#241b2e";
-function svg(inner, vb="0 0 100 100"){ return `<svg viewBox="${vb}" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="${OL}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">${inner}</svg>`; }
+function s(inner,vb="0 0 100 100"){ return `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`; }
+// helper: soft shape = fill + darker shade + white highlight
+const HL='rgba(255,255,255,.55)';
 
 const ILLO = {
-  dosa: svg(`
-    <ellipse cx="50" cy="80" rx="40" ry="10" fill="#fff"/>
-    <path d="M20 76 L58 22 Q63 15 66 24 L76 76 Z" fill="#f2b441"/>
-    <circle cx="40" cy="66" r="3.5" fill="#c77a2a" stroke="none"/>
-    <circle cx="52" cy="72" r="3" fill="#c77a2a" stroke="none"/>
-    <circle cx="16" cy="70" r="7" fill="#ffffff"/>`),
-  coffee: svg(`
-    <path d="M30 20 q-6 6 0 12" stroke-width="3.5"/>
-    <path d="M46 16 q-6 7 0 14" stroke-width="3.5"/>
-    <path d="M24 44 h44 v14 a22 22 0 0 1 -44 0 Z" fill="#fff"/>
-    <path d="M68 47 a12 12 0 0 1 0 20" fill="none"/>
-    <ellipse cx="46" cy="44" rx="22" ry="6" fill="#6b3f1d"/>
-    <ellipse cx="46" cy="82" rx="30" ry="6" fill="#fff"/>`),
-  pasta: svg(`
-    <path d="M14 52 a36 22 0 0 0 72 0 Z" fill="#ffd23c"/>
-    <path d="M22 52 q10 -20 26 -12 M36 50 q10 -22 28 -10 M50 51 q12 -18 26 -6" stroke="#f0503c" stroke-width="3.5" fill="none"/>
-    <circle cx="34" cy="40" r="4" fill="#f0503c" stroke="none"/>
-    <circle cx="60" cy="42" r="4" fill="#f0503c" stroke="none"/>`),
-  cocktail: svg(`
-    <path d="M22 24 H78 L52 56 V78" fill="#8fe3ff"/>
-    <line x1="40" y1="80" x2="64" y2="80"/>
-    <circle cx="58" cy="40" r="4.5" fill="#2fb56b" stroke="none"/>
-    <line x1="58" y1="40" x2="72" y2="20" stroke-width="3"/>`),
-  matcha: svg(`
-    <path d="M26 46 h40 v12 a20 20 0 0 1 -40 0 Z" fill="#8fce4f"/>
-    <ellipse cx="46" cy="46" rx="20" ry="5.5" fill="#a7dd6a"/>
-    <path d="M66 49 a11 11 0 0 1 0 18" fill="none"/>
-    <path d="M34 22 q-5 6 0 12 M46 20 q-5 7 0 12" stroke-width="3.5"/>
-    <ellipse cx="46" cy="80" rx="27" ry="5.5" fill="#fff"/>`),
-  bowl: svg(`
-    <path d="M16 50 a34 24 0 0 0 68 0 Z" fill="#fff"/>
-    <path d="M30 48 a20 12 0 0 0 40 0 Z" fill="#f2b441"/>
-    <circle cx="42" cy="42" r="4" fill="#2fb56b" stroke="none"/>
-    <circle cx="56" cy="44" r="4" fill="#f0503c" stroke="none"/>
-    <path d="M14 50 h72" />`),
-  sandwich: svg(`
-    <path d="M18 40 L50 22 L82 40 Z" fill="#f2b441"/>
-    <path d="M20 44 h60 v6 h-60 Z" fill="#8fce4f"/>
-    <path d="M20 52 h60 l-6 10 a26 26 0 0 1 -48 0 Z" fill="#ffce7a"/>
-    <path d="M30 50 q6 5 12 0 q6 5 12 0 q6 5 12 0" stroke="#f0503c" stroke-width="3" fill="none"/>`),
-  chilli: svg(`
-    <path d="M28 30 q10 -12 20 -4" stroke="#2fb56b" stroke-width="4"/>
-    <path d="M46 26 q22 6 18 40 q-4 20 -22 14 q-16 -6 -6 -24 q8 -14 10 -30 Z" fill="#f0503c"/>`),
-  mascot: svg(`
-    <rect x="24" y="26" width="52" height="52" rx="14" fill="#ffd23c"/>
-    <circle cx="41" cy="48" r="4.5" fill="${OL}" stroke="none"/>
-    <circle cx="59" cy="48" r="4.5" fill="${OL}" stroke="none"/>
-    <path d="M40 60 q10 10 20 0" stroke-width="3.5" fill="none"/>
-    <circle cx="34" cy="58" r="4" fill="#ff8fb3" stroke="none"/>
-    <circle cx="66" cy="58" r="4" fill="#ff8fb3" stroke="none"/>
-    <path d="M24 62 q-9 2 -10 12 M76 62 q9 2 10 12" stroke-width="3.5"/>
-    <path d="M38 78 v10 M62 78 v10" stroke-width="3.5"/>`, "0 0 100 100"),
+  tomato: s(`
+    <path d="M50 22 C40 20 34 16 30 20 C34 22 38 24 44 24" fill="#5a8f3a"/>
+    <circle cx="50" cy="58" r="30" fill="#e2503a"/>
+    <path d="M50 58 m-30 0 a30 30 0 0 1 60 0" fill="#c53a28" opacity=".35"/>
+    <path d="M50 28 c-6 0 -10 -6 -16 -4 c4 6 -2 8 2 12 c6 -4 8 4 14 2 c6 2 8 -6 14 -2 c4 -4 -2 -6 2 -12 c-6 -2 -10 4 -16 4 z" fill="#6aa544"/>
+    <ellipse cx="40" cy="48" rx="8" ry="12" fill="${HL}"/>`),
+  avocado: s(`
+    <path d="M50 20 C34 22 26 40 30 58 C34 80 50 88 50 88 C50 88 66 80 70 58 C74 40 66 22 50 20 Z" fill="#5e8a34"/>
+    <path d="M50 30 C40 32 34 44 37 58 C40 74 50 82 50 82 C50 82 60 74 63 58 C66 44 60 32 50 30 Z" fill="#cfe08a"/>
+    <circle cx="50" cy="60" r="12" fill="#8a5a2c"/>
+    <circle cx="46" cy="56" r="4" fill="${HL}"/>`),
+  strawberry: s(`
+    <path d="M50 34 C34 34 26 46 30 62 C34 80 50 88 50 88 C50 88 66 80 70 62 C74 46 66 34 50 34 Z" fill="#e23b52"/>
+    <path d="M50 34 C58 34 66 40 70 62 C71 68 68 76 64 82 C64 60 58 44 50 40 Z" fill="#c22a40" opacity=".5"/>
+    <path d="M50 38 c-8 -2 -12 -10 -20 -8 c4 4 0 8 6 10 M50 38 c8 -2 12 -10 20 -8 c-4 4 0 8 -6 10 M50 30 v10" fill="#5a8f3a"/>
+    <path d="M50 26 c-6 2 -10 8 -6 12 c4 -4 8 -4 12 0 c4 -4 0 -10 -6 -12 z" fill="#6aa544"/>
+    <g fill="#ffe38a"><circle cx="42" cy="54" r="1.6"/><circle cx="54" cy="52" r="1.6"/><circle cx="48" cy="64" r="1.6"/><circle cx="60" cy="62" r="1.6"/><circle cx="38" cy="66" r="1.6"/><circle cx="56" cy="74" r="1.6"/></g>`),
+  cherry: s(`
+    <path d="M40 30 C46 44 40 52 36 58 M62 26 C58 46 64 54 66 60" stroke="#5a8f3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M38 28 q12 -6 26 -2" stroke="#5a8f3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <circle cx="34" cy="66" r="14" fill="#c22a3a"/>
+    <circle cx="66" cy="68" r="14" fill="#d6394a"/>
+    <circle cx="30" cy="62" r="4" fill="${HL}"/><circle cx="62" cy="64" r="4" fill="${HL}"/>`),
+  lemon: s(`
+    <ellipse cx="50" cy="56" rx="30" ry="24" fill="#f4cf3f"/>
+    <ellipse cx="50" cy="56" rx="30" ry="24" fill="#e0b326" opacity=".3" transform="translate(3 4)"/>
+    <path d="M78 44 q6 -2 8 4 q-6 0 -8 -4z" fill="#6aa544"/>
+    <ellipse cx="40" cy="48" rx="9" ry="6" fill="${HL}"/>`),
+  blueberry: s(`
+    <circle cx="38" cy="52" r="15" fill="#4a63b0"/>
+    <circle cx="64" cy="46" r="13" fill="#5a73c4"/>
+    <circle cx="56" cy="68" r="14" fill="#41579c"/>
+    <g fill="#2e3f78"><path d="M38 52 l3 -4 3 4 -3 4z"/><path d="M64 46 l2.5 -3 2.5 3 -2.5 3z"/><path d="M56 68 l3 -4 3 4 -3 4z"/></g>
+    <circle cx="33" cy="47" r="3.5" fill="${HL}"/><circle cx="60" cy="42" r="3" fill="${HL}"/>
+    <path d="M60 40 q6 -12 16 -12" stroke="#5a8f3a" stroke-width="3" fill="none" stroke-linecap="round"/>`),
+  chilli: s(`
+    <path d="M30 34 q10 -12 20 -4" stroke="#5a8f3a" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M48 30 q24 8 18 42 q-6 22 -24 14 q-16 -8 -4 -26 q10 -16 10 -30z" fill="#d64b32"/>
+    <path d="M52 34 q16 8 12 36 q-4 14 -14 16 q10 -6 12 -22 q3 -20 -10 -30z" fill="#b8371f" opacity=".5"/>
+    <path d="M40 52 q4 10 -2 22" stroke="${HL}" stroke-width="3" fill="none" stroke-linecap="round"/>`),
+  peach: s(`
+    <circle cx="48" cy="56" r="28" fill="#f6a95c"/>
+    <circle cx="58" cy="52" r="22" fill="#f28a6a"/>
+    <path d="M48 30 q4 -8 12 -8" stroke="#5a8f3a" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M64 26 q10 -6 16 2 q-10 2 -16 -2z" fill="#6aa544"/>
+    <path d="M50 34 q-6 22 0 44" stroke="#d97a4a" stroke-width="2.5" fill="none" opacity=".6"/>
+    <ellipse cx="40" cy="48" rx="7" ry="10" fill="${HL}"/>`),
+  coffee: s(`
+    <path d="M30 20 q-5 6 0 12 M44 16 q-5 7 0 14" stroke="#c39" stroke-width="3" fill="none" opacity=".4" stroke-linecap="round"/>
+    <path d="M24 44 h44 v13 a22 22 0 0 1 -44 0z" fill="#fff"/>
+    <path d="M68 47 a12 12 0 0 1 0 20" stroke="#c88a5a" stroke-width="4" fill="none"/>
+    <ellipse cx="46" cy="44" rx="22" ry="6" fill="#7a4a2a"/>
+    <ellipse cx="46" cy="82" rx="30" ry="6" fill="#f0e2c8"/>
+    <path d="M24 44 h44 v13 a22 22 0 0 1 -44 0z" fill="none" stroke="#e0cba6" stroke-width="2.5"/>`),
+  pasta: s(`
+    <path d="M16 52 a34 22 0 0 0 68 0z" fill="#fce7b8"/>
+    <path d="M16 52 a34 22 0 0 0 68 0z" fill="#e9cf8e" opacity=".4" transform="translate(0 3)"/>
+    <path d="M22 50 q10 -20 26 -12 M36 48 q10 -22 30 -10 M50 50 q12 -18 26 -6" stroke="#f3d377" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <ellipse cx="48" cy="42" rx="14" ry="9" fill="#d64b32"/>
+    <path d="M42 40 q6 -4 12 0" stroke="#6aa544" stroke-width="3" fill="none" stroke-linecap="round"/>`),
+  croissant: s(`
+    <path d="M18 60 q6 -22 32 -24 q26 2 32 24 q-10 -8 -20 -6 q6 6 4 14 q-8 -10 -16 -8 q6 8 2 16 q-8 -12 -16 -10 q4 8 -2 14 q-12 -10 -18 -22z" fill="#e39a4e"/>
+    <path d="M50 36 q18 2 26 20 q-10 -6 -18 -4" stroke="#c47a30" stroke-width="2.5" fill="none" opacity=".6"/>
+    <ellipse cx="40" cy="46" rx="8" ry="5" fill="${HL}"/>`),
+  cocktail: s(`
+    <path d="M24 26 H76 L52 56 V78" stroke="#b98adf" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M26 28 H74 L52 55 Z" fill="#f6a9c8"/>
+    <path d="M26 28 H74 L52 55 Z" fill="#ef86ac" opacity=".4" transform="translate(0 2)"/>
+    <line x1="40" y1="80" x2="64" y2="80" stroke="#b98adf" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="60" cy="38" r="4.5" fill="#e2503a"/>
+    <path d="M60 38 l12 -16" stroke="#6aa544" stroke-width="3" stroke-linecap="round"/>`),
+  mascot: s(`
+    <rect x="24" y="26" width="52" height="52" rx="16" fill="#ffb4da"/>
+    <rect x="24" y="26" width="52" height="52" rx="16" fill="#ef86ac" opacity=".3" transform="translate(0 3)"/>
+    <circle cx="41" cy="48" r="4.5" fill="#5a3a48"/><circle cx="59" cy="48" r="4.5" fill="#5a3a48"/>
+    <path d="M40 60 q10 9 20 0" stroke="#5a3a48" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <circle cx="34" cy="58" r="4" fill="#ff7ea8"/><circle cx="66" cy="58" r="4" fill="#ff7ea8"/>
+    <path d="M24 62 q-9 2 -10 12 M76 62 q9 2 10 12 M38 78 v9 M62 78 v9" stroke="#5a3a48" stroke-width="3.5" fill="none" stroke-linecap="round"/>`),
 };
-
 function sparkle(x,y,size,color){
   return `<div class="spark" style="left:${x};top:${y};width:${size}mm;height:${size}mm">
-    <svg viewBox="0 0 100 100"><path d="M50 4 L58 42 L96 50 L58 58 L50 96 L42 58 L4 50 L42 42 Z"
-      fill="${color}" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/></svg></div>`;
+    <svg viewBox="0 0 100 100"><path d="M50 6 C54 34 66 46 94 50 C66 54 54 66 50 94 C46 66 34 54 6 50 C34 46 46 34 50 6Z" fill="${color}"/></svg></div>`;
 }
 
 /* ============================================================================
-   CATALOGUE  — edit dishes here. meal → cuisine group → items.
-   sym: "diamond" ◆ | "heart" ♥ | null   ·   isNew: true → NEW badge
+   CATALOGUE — meal → cuisine group → items.  pastel = card bg, hue = heading.
    ============================================================================ */
 const CATALOGUE = {
-  lunch: {
-    label:"Lunch", kick:"midday, lighter & all-day breakfast", illo:"dosa",
-    bg:"#ffd23c",
+  lunch:{ label:"Lunch", kick:"midday, lighter & all-day breakfast", illo:"strawberry",
+    banner:{pastel:"#ffb4da", hue:"#c43a78"},
     groups:[
-      { origin:"South Indian", tag:"tiffin & staples", bg:"#ffd23c", ink:"#241b2e", illo:"dosa",
+      { origin:"South Indian", tag:"tiffin & staples", pastel:"#fef7c5", hue:"#d9772a", illo:"lemon",
         items:[
           {name:"Poha", desc:"Flattened rice, mustard-seed tadka, peanuts & lime."},
           {name:"Dosa", sym:"diamond", desc:"Crisp fermented crepe, straight off the tawa."},
           {name:"Uttapam", sym:"diamond", desc:"Thick, fluffy pancake loaded with onion & tomato."},
         ]},
-      { origin:"Mediterranean & Middle Eastern", tag:"bright, herby, protein-forward", bg:"#ff7a45", ink:"#2a1206", illo:"chilli",
+      { origin:"Mediterranean & Middle Eastern", tag:"bright, herby, protein-forward", pastel:"#ffcbbf", hue:"#cc3b2a", illo:"tomato",
         items:[
           {name:"Shakshuka", desc:"Spiced tomato-pepper stew, scoop-with-bread. Veg edition."},
           {name:"Tahini Chickpea Toast", isNew:true, desc:"Creamy tahini, mashed chickpea, a squeeze of lemon."},
           {name:"Paneer Shawarma Wrap", isNew:true, desc:"Air-fried crispy paneer, garlic sauce, rolled tight."},
           {name:"Bruschetta", isNew:true, desc:"Tawa-toasted under a lid. High-protein topping."},
         ]},
-      { origin:"Café & Continental", tag:"the everyday breakfast bench", bg:"#34c7b5", ink:"#0d2a25", illo:"coffee", wide:true,
+      { origin:"Café & Continental", tag:"the everyday breakfast bench", pastel:"#d5ffc9", hue:"#4e8a2e", illo:"avocado", wide:true,
         items:[
           {name:"The Regular", desc:"Greek yogurt, muesli & a crisp apple. The morning ritual."},
           {name:"Avocado Toast", sym:"diamond", desc:"Smashed avocado, chilli flakes, good crunch."},
@@ -313,16 +300,15 @@ const CATALOGUE = {
           {name:"Ragi Roti", isNew:true, desc:"Nutty finger-millet flatbread, tawa-fresh."},
         ]},
     ],
-    // second lunch page
     groups2:[
-      { origin:"Between Breads", tag:"sandwiches, wraps & toasts", bg:"#59b7f5", ink:"#0c2740", illo:"sandwich",
+      { origin:"Between Breads", tag:"sandwiches, wraps & toasts", pastel:"#bcd3f9", hue:"#3663b8", illo:"croissant",
         items:[
           {name:"House Sandwich", sym:"diamond", desc:"The signature stack, built your way."},
           {name:"Spicy Korean Sandwich", isNew:true, desc:"Paneer edition — sweet heat & crunch."},
           {name:"Bean Patty Sandwich", isNew:true, desc:"House-made bean patty, properly stacked."},
           {name:"Paneer Tikka Garlic Bread", isNew:true, desc:"Tawa-style, smoky paneer on garlic bread."},
         ]},
-      { origin:"Pan-Asian Bowls", tag:"high-protein, one-bowl meals", bg:"#ff6fae", ink:"#3a0f26", illo:"bowl",
+      { origin:"Pan-Asian Bowls", tag:"high-protein, one-bowl meals", pastel:"#ffb4da", hue:"#c43a78", illo:"strawberry",
         items:[
           {name:"Thai Tofu Bowl", isNew:true, desc:"Coconut-lime & tofu. About 30g protein."},
           {name:"Gobhi Steak Bowl", isNew:true, desc:"Seared cauliflower steak. About 27g protein."},
@@ -331,12 +317,10 @@ const CATALOGUE = {
         ]},
     ]
   },
-
-  dinner: {
-    label:"Dinner", kick:"home food & the pasta bar", illo:"pasta",
-    bg:"#2fb56b",
+  dinner:{ label:"Dinner", kick:"home food & the pasta bar", illo:"pasta",
+    banner:{pastel:"#f5d1ef", hue:"#8b4fa8"},
     groups:[
-      { origin:"Ghar Ka Khaana", tag:"North Indian · the everyday plate", bg:"#2fb56b", ink:"#fff6df", illo:"bowl", wide:true,
+      { origin:"Ghar Ka Khaana", tag:"North Indian · the everyday plate", pastel:"#f5d1ef", hue:"#8b4fa8", illo:"chilli", wide:true,
         items:[
           {name:"Roti + Sabji", sym:"heart", desc:"Fresh flatbread & whatever sabji the week brings."},
           {name:"Dal Chawal", sym:"heart", desc:"Comfort in a bowl. Tempered dal over rice."},
@@ -347,7 +331,7 @@ const CATALOGUE = {
           {name:"Tofu Rajma Curry", isNew:true, desc:"Kidney beans & tofu in a thick, slow gravy."},
           {name:"Dal, Toasted Jeera Tadka", isNew:true, desc:"Extra-nutty cumin tempering poured over."},
         ]},
-      { origin:"Italian · Pasta Bar", tag:"stovetop only · no oven", bg:"#f0503c", ink:"#fff6df", illo:"pasta",
+      { origin:"Italian · Pasta Bar", tag:"stovetop only · no oven", pastel:"#fff8e9", hue:"#c0392b", illo:"pasta",
         items:[
           {name:"Pesto Pasta", sym:"diamond", desc:"Basil-forward, sharp & green."},
           {name:"Cream Pasta", sym:"diamond", desc:"White sauce, garlic, all comfort."},
@@ -357,173 +341,100 @@ const CATALOGUE = {
         ]},
     ]
   },
-
-  drinks: {
-    label:"Drinks", kick:"brews by day · cocktails by night", illo:"cocktail",
-    bg:"#a97bf0",
+  drinks:{ label:"Drinks", kick:"brews by day · cocktails by night", illo:"cocktail",
+    banner:{pastel:"#bcd3f9", hue:"#3e8e7e"},
     groups:[
-      { origin:"Brews", tag:"iced or hot", bg:"#d98a4e", ink:"#2a1606", illo:"coffee",
-        items:[ {name:"Coffee"}, {name:"Matcha"} ] },
-      { origin:"Gin", tag:"crisp & botanical", bg:"#2ec4b6", ink:"#0d2b27", illo:"cocktail",
-        items:[ {name:"Gin & Tonic"}, {name:"Gimlet"} ] },
-      { origin:"Whiskey", tag:"warm & smoky", bg:"#e8a13a", ink:"#2a1606", illo:"cocktail",
-        items:[ {name:"Whiskey Sour"}, {name:"Old Fashioned"} ] },
-      { origin:"Vodka", tag:"bright & buzzy", bg:"#7c83ff", ink:"#101138", illo:"cocktail",
-        items:[ {name:"Moscow Mule"}, {name:"Espresso Martini"} ] },
+      { origin:"Brews", tag:"iced or hot", pastel:"#fff8e9", hue:"#a9662e", illo:"coffee", items:[{name:"Coffee"},{name:"Matcha"}] },
+      { origin:"Gin", tag:"crisp & botanical", pastel:"#d5ffc9", hue:"#3e8e7e", illo:"lemon", items:[{name:"Gin & Tonic"},{name:"Gimlet"}] },
+      { origin:"Whiskey", tag:"warm & smoky", pastel:"#fef7c5", hue:"#c9822e", illo:"cocktail", items:[{name:"Whiskey Sour"},{name:"Old Fashioned"}] },
+      { origin:"Vodka", tag:"bright & buzzy", pastel:"#bcd3f9", hue:"#5a5fc0", illo:"cherry", items:[{name:"Moscow Mule"},{name:"Espresso Martini"}] },
     ]
   }
 };
+const COUNTER = { origin:"The Condiment Counter", tag:"made in-house · ask for a spoon", pastel:"#fef7c5", hue:"#5c9a3a", illo:"chilli",
+  items:[{name:"Hummus",sym:"heart"},{name:"Pudina Chutney"},{name:"Thecha Butter"},{name:"Hot Honey Butter"},
+    {name:"Roasted Red Pepper Sauce"},{name:"The 8 Protein Sauces",note:"yogurt-based"},{name:"House Ginger-Garlic Paste"}] };
+const SWEET = { origin:"Sweet Ending", tag:"one, done well", pastel:"#ffb4da", hue:"#c43a78", illo:"cherry",
+  name:"4-Ingredient Chocolate Pudding", isNew:true, desc:"No-bake, set cold. Four things and nothing else." };
 
-const COUNTER = {
-  origin:"The Condiment Counter", tag:"made in-house · ask for a spoon", bg:"#a97bf0", ink:"#1c0f3a", illo:"chilli",
-  items:[
-    {name:"Hummus", sym:"heart"}, {name:"Pudina Chutney"}, {name:"Thecha Butter"},
-    {name:"Hot Honey Butter"}, {name:"Roasted Red Pepper Sauce"},
-    {name:"The 8 Protein Sauces", note:"yogurt-based"}, {name:"House Ginger-Garlic Paste"},
-  ]
-};
-
-const SWEET = {
-  origin:"Sweet Ending", tag:"one, done well", bg:"#ff5da2", ink:"#fff6df", illo:"mascot",
-  name:"4-Ingredient Chocolate Pudding", isNew:true,
-  desc:"No-bake, set cold. Four things and nothing else."
-};
-
-/* ============================================================================
-   RENDER
-   ============================================================================ */
-const SYM = { diamond:"◆", heart:"♥" };
-const isLight = ink => /^#f/i.test(ink);   // cream inks start with #f...
-
+/* ============================================================================ RENDER */
+const SYM={diamond:"◆",heart:"♥"};
 function itemHTML(d){
-  const sym = d.sym ? `<i class="b b--${d.sym==='diamond'?'d':'h'}">${SYM[d.sym]}</i>` : "";
-  const nw  = d.isNew ? `<span class="new">new</span>` : "";
-  return `<div class="it">
-    <div class="it__top"><span class="it__name">${d.name}</span>${sym}${nw}</div>
-    ${d.desc ? `<div class="it__desc">${d.desc}</div>` : ""}
-  </div>`;
+  const sym=d.sym?`<i class="b b--${d.sym==='diamond'?'d':'h'}">${SYM[d.sym]}</i>`:"";
+  const nw=d.isNew?`<span class="new">new</span>`:"";
+  return `<div class="it"><div class="it__top"><span class="it__name">${d.name}</span>${sym}${nw}</div>${d.desc?`<div class="it__desc">${d.desc}</div>`:""}</div>`;
 }
-
 function cardHTML(g){
-  const two = (g.wide && g.items.length > 4) ? " two" : "";
-  return `<div class="card ${g.wide?'card--wide':''}" style="--bg:${g.bg};--ink:${g.ink}">
+  const two=(g.wide&&g.items.length>4)?" two":"";
+  return `<div class="card ${g.wide?'card--wide':''}" style="--pastel:${g.pastel};--hue:${g.hue}">
     <div class="card__illo">${ILLO[g.illo]||""}</div>
-    <div class="card__title">${g.origin}</div>
-    <div class="card__tag">${g.tag}</div>
-    <div class="card__items${two}">${g.items.map(itemHTML).join("")}</div>
-  </div>`;
+    <div class="card__title">${g.origin}</div><div class="card__tag">${g.tag}</div>
+    <div class="card__items${two}">${g.items.map(itemHTML).join("")}</div></div>`;
 }
-
 function bannerHTML(meal){
-  return `<div class="banner" style="background:${meal.bg}">
-    <div>
-      <div class="banner__title">${meal.label.toUpperCase()}</div>
-      <div class="banner__kick">${meal.kick}</div>
-    </div>
-    <div class="banner__illo">${ILLO[meal.illo]}</div>
-  </div>`;
+  return `<div class="banner" style="background:${meal.banner.pastel}">
+    <div class="gingham banner__check"></div>
+    <div><div class="banner__title" style="color:${meal.banner.hue}">${meal.label.toUpperCase()}</div>
+    <div class="banner__kick">${meal.kick}</div></div>
+    <div class="banner__illo">${ILLO[meal.illo]}</div></div>`;
 }
-
 function counterHTML(){
-  const run = COUNTER.items.map(c=>{
-    const sym = c.sym ? `<i class="b b--h">♥</i>` : "";
-    const note = c.note ? ` <em>(${c.note})</em>` : "";
-    return `${c.name}${sym}${note}`;
-  }).join('<span class="dot">✦</span>');
-  return `<div class="card card--wide" style="--bg:${COUNTER.bg};--ink:${COUNTER.ink}">
-    <div class="card__illo">${ILLO[COUNTER.illo]}</div>
-    <div class="card__title">${COUNTER.origin}</div>
-    <div class="card__tag">${COUNTER.tag}</div>
-    <div class="counter">${run}</div>
-  </div>`;
+  const run=COUNTER.items.map(c=>{const sym=c.sym?`<i class="b b--h">♥</i>`:"";const note=c.note?` <em>(${c.note})</em>`:"";return `${c.name}${sym}${note}`;}).join('<span class="dot">✿</span>');
+  return `<div class="card card--wide" style="--pastel:${COUNTER.pastel};--hue:${COUNTER.hue}">
+    <div class="card__illo">${ILLO[COUNTER.illo]}</div><div class="card__title">${COUNTER.origin}</div>
+    <div class="card__tag">${COUNTER.tag}</div><div class="counter">${run}</div></div>`;
 }
-
 function sweetHTML(){
-  return `<div class="card feature" style="--bg:${SWEET.bg};--ink:${SWEET.ink}">
-    <div class="card__illo">${ILLO[SWEET.illo]}</div>
-    <div class="card__title">${SWEET.origin}</div>
-    <div class="feature__name">${SWEET.name} <span class="new">new</span></div>
-    <div class="feature__desc">${SWEET.desc}</div>
-  </div>`;
+  return `<div class="card feature" style="--pastel:${SWEET.pastel};--hue:${SWEET.hue}">
+    <div class="card__illo">${ILLO[SWEET.illo]}</div><div class="card__title">${SWEET.origin}</div>
+    <div class="feature__name">${SWEET.name} <span class="new">new</span></div><div class="feature__desc">${SWEET.desc}</div></div>`;
 }
-
 function drinkCardHTML(g){
-  const rows = g.items.map(d=>`<div class="drink"><span class="drink__name">${d.name}</span><span class="drink__lead"></span></div>`).join("");
-  return `<div class="card" style="--bg:${g.bg};--ink:${g.ink}">
-    <div class="card__illo">${ILLO[g.illo]||""}</div>
-    <div class="card__title">${g.origin}</div>
-    <div class="card__tag">${g.tag}</div>
-    <div class="card__items" style="gap:2mm">${rows}</div>
-  </div>`;
+  const rows=g.items.map(d=>`<div class="drink"><span class="drink__name">${d.name}</span><span class="drink__lead"></span></div>`).join("");
+  return `<div class="card" style="--pastel:${g.pastel};--hue:${g.hue}">
+    <div class="card__illo">${ILLO[g.illo]||""}</div><div class="card__title">${g.origin}</div>
+    <div class="card__tag">${g.tag}</div><div class="card__items" style="gap:2mm">${rows}</div></div>`;
 }
-
 function foot(pg){ return `<div class="foot"><span>THE DAILY · PRANJAL'S KITCHEN</span><span>${pg}</span></div>`; }
+function page(inner,cls="",sparks=""){ return `<div class="page ${cls}">${sparks}<div class="page__in">${inner}</div></div>`; }
 
-function page(inner, cls="", sparks=""){
-  return `<div class="page ${cls}">${sparks}<div class="page__in">${inner}</div></div>`;
-}
-
-/* ---- COVER ---- */
+/* cover — each word of the logo a different hue */
 const cover = page(`
   <div class="cover__frame">
-    ${sparkle("6mm","8mm",9,"#ffd23c")}
-    ${sparkle("120mm","4mm",7,"#59b7f5")}
-    ${sparkle("150mm","70mm",11,"#2fb56b")}
-    <div class="cover__ribbon">✦ Pranjal's Kitchen · Est. Daily</div>
-    <div class="cover__logo"><span class="l1">THE</span><span class="l2">DAILY</span></div>
+    ${sparkle("8mm","10mm",8,"#ffd23c")}${sparkle("120mm","8mm",6,"#8fb3ec")}${sparkle("150mm","64mm",10,"#a7dd8a")}
+    <div class="cover__ribbon">✿ Pranjal's Kitchen · Est. Daily</div>
+    <div class="cover__logo"><span class="r1" style="color:#c43a78">THE</span><span class="r2" style="color:#4e8a2e">DAILY</span></div>
     <div class="cover__tag">A café-style menu of everything I cook — weekly staples, house specials &amp; every reel I couldn't stop thinking about.</div>
     <div class="cover__ritual">☀ <b>The Regular:</b> most mornings begin with Greek yogurt, muesli &amp; an apple. Everything else is served all day.</div>
     <div class="cover__spacer"></div>
     <div class="legend">
       <span class="chip"><span class="s b--d">◆</span> House special · solo</span>
       <span class="chip"><span class="s b--h">♥</span> For two · shared</span>
-      <span class="chip"><span class="new">new</span> Saved, not yet in rotation</span>
+      <span class="chip"><span class="new" style="background:#c43a78">new</span> Saved, not yet in rotation</span>
     </div>
-    <div class="cover__foot"><span>VEG · AIR-FRYER · HINGLISH</span><span>A4 · v2</span></div>
+    <div class="cover__foot"><span>VEG · AIR-FRYER · HINGLISH</span><span>A4 · v3</span></div>
+    <div class="cover__check gingham"></div>
   </div>
 `, "cover");
 
-/* ---- LUNCH ① ---- */
-const L = CATALOGUE.lunch;
-const lunch1 = page(
-  bannerHTML(L) +
-  `<div class="cards">${L.groups.map(cardHTML).join("")}</div>` +
-  foot("Lunch · 1 of 2"),
-  "", sparkle("176mm","150mm",8,"#ff6fae")+sparkle("6mm","240mm",7,"#34c7b5")
-);
-
-/* ---- LUNCH ② ---- */
+const L=CATALOGUE.lunch;
+const lunch1 = page(bannerHTML(L)+`<div class="cards">${L.groups.map(cardHTML).join("")}</div>`+foot("Lunch · 1 of 2"),"",
+  sparkle("178mm","150mm",7,"#ffb4da")+sparkle("6mm","250mm",6,"#a7dd8a"));
 const lunch2 = page(
-  `<div class="banner" style="background:${L.bg}">
-     <div><div class="banner__title" style="font-size:26pt">LUNCH, cont.</div>
-     <div class="banner__kick">between breads &amp; big bowls</div></div>
-     <div class="banner__illo">${ILLO.bowl}</div></div>` +
-  `<div class="cards">${L.groups2.map(cardHTML).join("")}${counterHTML()}</div>` +
-  foot("Lunch · 2 of 2"),
-  "", sparkle("172mm","120mm",9,"#ffd23c")
-);
+  `<div class="banner" style="background:${L.banner.pastel}"><div class="gingham banner__check"></div>
+    <div><div class="banner__title" style="font-size:28pt;color:${L.banner.hue}">LUNCH, cont.</div>
+    <div class="banner__kick">between breads &amp; big bowls</div></div>
+    <div class="banner__illo">${ILLO.peach}</div></div>`+
+  `<div class="cards">${L.groups2.map(cardHTML).join("")}${counterHTML()}</div>`+foot("Lunch · 2 of 2"),"",
+  sparkle("172mm","118mm",8,"#ffd23c"));
+const D=CATALOGUE.dinner;
+const dinner = page(bannerHTML(D)+`<div class="cards">${cardHTML(D.groups[0])}${cardHTML(D.groups[1])}${sweetHTML()}</div>`+foot("Dinner"),"",
+  sparkle("178mm","58mm",7,"#c9a7e6")+sparkle("8mm","250mm",6,"#ffd23c"));
+const DR=CATALOGUE.drinks;
+const drinks = page(bannerHTML(DR)+`<div class="cards">${DR.groups.map(drinkCardHTML).join("")}</div>`+
+  `<div class="closing"><div style="width:30mm;flex:none">${ILLO.mascot}</div>
+    <div class="closing__txt"><b>That's the menu!</b><br>Cocktails are a starting list — only rule is gin, whiskey or vodka. Tell the kitchen what you're feeling.</div></div>`+
+  foot("Drinks"),"", sparkle("174mm","150mm",8,"#8fb3ec")+sparkle("10mm","30mm",6,"#a7dd8a"));
 
-/* ---- DINNER ---- */
-const D = CATALOGUE.dinner;
-const dinner = page(
-  bannerHTML(D) +
-  `<div class="cards">${cardHTML(D.groups[0])}${cardHTML(D.groups[1])}${sweetHTML()}</div>` +
-  foot("Dinner"),
-  "", sparkle("178mm","60mm",8,"#f0503c")+sparkle("8mm","250mm",7,"#ffd23c")
-);
-
-/* ---- DRINKS ---- */
-const DR = CATALOGUE.drinks;
-const drinks = page(
-  bannerHTML(DR) +
-  `<div class="cards">${DR.groups.map(drinkCardHTML).join("")}</div>` +
-  `<div class="closing">
-     <div style="width:30mm;flex:none">${ILLO.mascot}</div>
-     <div class="closing__txt"><b>That's the menu!</b><br>Cocktails are a starting list — only rule is gin, whiskey or vodka. Tell the kitchen what you're feeling.</div>
-   </div>` +
-  foot("Drinks"),
-  "", sparkle("174mm","150mm",9,"#7c83ff")+sparkle("10mm","30mm",7,"#2ec4b6")
-);
-
-document.getElementById("book").innerHTML = cover + lunch1 + lunch2 + dinner + drinks;
+document.getElementById("book").innerHTML = cover+lunch1+lunch2+dinner+drinks;
 </script>
