@@ -1,0 +1,13 @@
+{
+  "name": "reading-list-carousel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The Reading List — 10-slide Instagram book-recommendations carousel (1080x1350), library-checkout-card design system. See ../CLAUDE.md.",
+  "scripts": {
+    "build": "node render.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.55.0"
+  }
+}
