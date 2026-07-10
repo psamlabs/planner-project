@@ -27,6 +27,7 @@ Built around one promise:
 | **`templates/hooks-and-ctas.md`** | Swipe file: curiosity-first hooks, CTAs, reframe sharpeners. | When the hook or ending isn't landing. |
 | **`calendar.md`** | Weekly cadence, pillar rotation, a seeded 4-week calendar, review rituals. | Sunday planning + monthly review. |
 | **`idea-bank.md`** | A running well of seeds mapped to your 5 pillars + your "greatest hits" reframes. | Whenever you notice something. Constantly. |
+| **`references.md`** | Creators to study (format/aesthetic/community — *not* voice) + hashtag banks by theme. | Planning visuals, choosing tags, or hunting format inspiration. |
 
 ---
 

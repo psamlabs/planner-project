@@ -139,8 +139,9 @@ CAPTION:     Short. Reinforce the thought + one open question.
 - Sometimes just an emoji and silence. Let the thought breathe.
 
 ## Hashtag & discovery note
-- A small set (5–12) of *specific* tags beats 30 generic ones. Match the niche: reading, creativity, thoughtful-creator, art, slow-living — not #viral #explore.
+- A small set (5–12) of *specific* tags beats 30 generic ones. **Full banks by theme live in `references.md`** (books / marketing / aesthetic + the precision tag `#thoughtfulcreator`).
 - The cover slide / first line does 90% of the discovery work. Obsess over that, not the tags.
+- See `references.md` for creators to study (format/aesthetic/community models — not voice models).
 
 ## Pre-post checklist
 - [ ] Cover/first line creates a curiosity gap (doesn't give away the whole idea)

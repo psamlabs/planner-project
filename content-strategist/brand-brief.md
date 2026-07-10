@@ -104,6 +104,7 @@ The five voice words: **Curious · Warm · Thoughtful · Playfully witty · Reac
 ### Reference creators (aim, then diverge)
 Tarini · reflective Substack writers · thoughtful carousel creators.
 **Diverge by being more playful and more socially warm than they are** — her energy is more social, her humour more playful.
+*(These are the **voice** models. For **format / aesthetic / community** models — a different list — see `references.md`. Don't let higher-follower marketing accounts there pull the voice toward trend-news or agency polish.)*
 
 ---
 
@@ -155,7 +156,7 @@ The business is no longer a placeholder. It's **Stacked** — `stacked.ooam.work
 
 This sharpens the "sell thinking, not time" vision: the thinking now has a first product. **Stacked is proof she ships, not just strategizes** — the single strongest authority signal for a content strategist. A strategist who built her own book app is a *walking case study*, which is the whole authority flywheel: she's not lecturing about brand-building in the abstract, she's doing it live, on herself.
 
-The rest of the vision still orbits Stacked — digital products, workshops, storytelling frameworks, a reading club, creative newsletters, consulting. (The reading club and newsletter are natural companions to a book app.)
+The rest of the vision still orbits Stacked — digital products, workshops, storytelling frameworks, a reading club, creative newsletters, consulting. (The reading club and newsletter are natural companions to a book app.) For the community-building playbook, study **@swipethebook / @weare.booked** (see `references.md`) — borrow the *mechanics* of running a shared read, not a product pitch.
 
 ### How content builds toward Stacked — proof-of-work, NOT sales
 
