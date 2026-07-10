@@ -35,14 +35,32 @@ A "through a lens" image + a caption that does the engine in miniature. Pillar 4
 ```
 
 ### Format C — The Talking-head Reel (you're comfortable on camera)
-15–45 sec. One thought, said like you're telling a friend across a café table.
+15–60 sec. One thought, said like you're telling a friend across a café table.
+**Script structure — 4 beats** (retention mechanics + the engine):
 
 ```
-[0–3s HOOK]  Say the curiosity gap out loud. No "hi guys." Straight in.
-[MIDDLE]     Notice → Connect, conversationally. One idea.
-[END]        The reframe. Let it hang. Don't over-explain.
-CAPTION:     Short. Reinforce the thought + one open question.
+1. HOOK (0–3s)     Scroll-stopping, straight in — no "hi guys." Open the curiosity gap
+                   out loud: tease the thought, never give it away. Usually the NOTICE,
+                   said with tension. ("I finished a book last night and I'm a little
+                   annoyed at it — in the best way.")
+
+2. EXPLANATION     Get immediately into it. Walk the CONNECT conversationally —
+                   the observation unfolding, the worlds linking. One idea only.
+                   Concrete beats abstract; story beats over list points.
+
+3. REHOOK (~60–70%) A twist that buys the last third: "but here's the part I didn't
+                   see coming…" / "and then I realised the actual problem was…" /
+                   "but the bit I can't stop thinking about is…". Save the best —
+                   the REFRAME — for after this beat. Never front-load it.
+
+4. CLOSE           The reframe lands → then ONE short line: an open question or a
+                   soft CTA ("save this for…", "tell me yours"). Let it hang;
+                   don't over-explain the thought you just gave them.
+
+CAPTION:           Short. Restate the reframe in one line + the open question.
 ```
+
+**Voice guard for reels:** the HOOK promises a *thought*, not "value"; the EXPLANATION is a story unfolding, not steps/numbers/hacks. If the script starts sounding like "3 things you need to…", it's drifted — rewrite curiosity-first.
 
 ### Format D — The "Quote it left me with" (Pillar 1)
 *Not* a book review. A line from a book/essay + what it made you rethink.
