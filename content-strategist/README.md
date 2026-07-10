@@ -28,8 +28,9 @@ Built around one promise:
 | **`calendar.md`** | Weekly cadence, pillar rotation, a seeded 4-week calendar, review rituals. | Sunday planning + monthly review. |
 | **`idea-bank.md`** | A running well of seeds mapped to your 5 pillars + your "greatest hits" reframes. | Whenever you notice something. Constantly. |
 | **`references.md`** | Creators to study (format/aesthetic/community — *not* voice) + hashtag banks by theme. | Planning visuals, choosing tags, or hunting format inspiration. |
+| **`master-plan.md`** | The operating document: 90-day roadmap, weekly work rhythm, checkpoints, contingency rules, asset pipeline. | Sunday planning + every review. |
 | **`strategy-summary.md`** | Standalone one-pager: the promise, engine, 4 series, week-by-week arc, Stacked arc. | Hand-off / quick reference. |
-| **`drafts/week-1.md`, `drafts/week-2.md`** | Fully written, ready-to-publish posts (captions + hashtags + visual notes). | When you sit down to schedule the week. |
+| **`drafts/week-1..4.md`** | The full month, fully written and ready to publish (captions + hashtags + visual notes + shot lists). | When you sit down to schedule the week. |
 
 ---
 

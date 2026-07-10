@@ -96,9 +96,9 @@ Designed to be *doable*, then scale. Quality of thought > volume. The two weekly
 ### 🗓️ Week 4 — *zoom out* · lead pillar: 🎬 Creativity & storytelling + 🔍 I Spy
 | Day | Platform | Series / Format · Pillar · Seed |
 |-----|----------|--------------------------------|
-| Mon | LinkedIn | **Notice-of-the-Week twin** · 2+5 · Why certain campaigns *stay* — the mechanism (how an idea travels), not the praise. |
+| Mon | LinkedIn | **Notice-of-the-Week twin** · 2+5 · Creativity as a daily practice, not lightning — the strategic twin of Tuesday's carousel. *(Was "why campaigns stay" — cut: it collided with Wk2 Fri's teardown and Wk4 Thu's Rent-Free, and broke the twin rule.)* |
 | Tue | Instagram | 🧠 **Notice of the Week** (carousel) · 2+4 · Your creative process (painting / cooking / drink-making) as a metaphor for making anything — how creativity actually *feels.* |
-| Wed | LinkedIn | 💼 **Stacked build-in-public — the position** · 5+2 · "'No algorithm' isn't a missing feature. It's a stance: I'd rather you trust your own shelf than outsource your taste. Positioning is just deciding what you refuse to do." |
+| Wed | LinkedIn | 💼 **Stacked build-in-public — the cost of the position** · 5+2 · What refusing the algorithm *costs* — every real position has a price; a position with no price is a slogan. *(The reveal already used "positioning = what you refuse"; this goes one level deeper instead of repeating it.)* |
 | Thu | Instagram | 🔖 **Rent-Free** (quote card) · 2 · Reframe: *"Clever gets noticed. Memorable gets repeated."* Caption: the difference, and why brands chase the wrong one. |
 | Fri | LinkedIn | **AI-this-week / Pillar 2** · 2 · "What I learned about AI this week" — through a storytelling lens, not a tool tutorial. |
 | Sat | Instagram | 🔍 **I Spy** (monthly interactive carousel) · 3+4 · "5 things I noticed this month that changed how I saw something ordinary — can you spot yours?" Invite the audience to add theirs in the comments. (Noticing, turned into a game.) |
