@@ -142,17 +142,32 @@ Creative professionals, brand marketers, content strategists, founders, hiring m
 
 ---
 
-## 8. Future Business (the quiet north star)
+## 8. Future Business — Stacked (the north star, now real)
 
-Content is building the runway. The business sells **thinking, not time.**
+The business is no longer a placeholder. It's **Stacked** — `stacked.ooam.workers.dev` — a book-cataloging web app **Pranjal designed and built herself.**
 
-**Vision:** a creator-led brand around *curiosity, creativity, and storytelling* → eventually digital products, creative workshops, storytelling frameworks, brand/content strategy consulting, a community, a reading club, creative newsletters, maybe a studio.
+**Tagline:** *your shelf, mapped.*
 
-**What this means for content now (audience + authority phase):**
-- Every pillar is quietly demonstrating the *thinking* people will one day pay for. Show the reasoning, not just the conclusion.
-- Build the **reading club / newsletter** muscle early — Pillar 1 content is a soft on-ramp to a future community.
-- Collect the audience's language: what makes them say "I never thought of it that way." Those reactions are future product briefs.
-- Don't sell yet. **Earn trust in how she thinks.** The sale is 12–18 months of consistent "one new thought" away.
+**Positioning:**
+- **No algorithm.** It doesn't tell you what to read next. It maps what you own and what you've read.
+- **Series-gap tracking.** It surfaces the holes in your series — the book 3 you never bought, the trilogy missing its middle.
+- Built by a reader, for readers who treat a shelf as a **map, not a feed.**
+
+This sharpens the "sell thinking, not time" vision: the thinking now has a first product. **Stacked is proof she ships, not just strategizes** — the single strongest authority signal for a content strategist. A strategist who built her own book app is a *walking case study*, which is the whole authority flywheel: she's not lecturing about brand-building in the abstract, she's doing it live, on herself.
+
+The rest of the vision still orbits Stacked — digital products, workshops, storytelling frameworks, a reading club, creative newsletters, consulting. (The reading club and newsletter are natural companions to a book app.)
+
+### How content builds toward Stacked — proof-of-work, NOT sales
+
+The **"don't sell yet" rule still holds.** Content never says "sign up for Stacked." Instead it makes people *think the way Stacked thinks* — so when they find it, it feels inevitable, discovered rather than sold.
+
+- **Pillar 1 (Books) carries the philosophy.** Shelves as maps, series gaps, the anti-algorithm way of choosing what's next, the quiet pleasure of a catalog you own. Every time she models "how I think about my shelf," she demonstrates Stacked's worldview. The **`Shelf Check`** series (§11) is the home for this.
+- **Pillar 5 (Marketing) carries the build.** Build-in-public: what she learned designing a no-algorithm product, the itch no app scratched, the behaviour insight behind series-gap tracking, positioning decisions as marketing lessons. This is proof-of-work — a strategist shipping her own product.
+
+### Guardrails
+- Reference Stacked **~1 in 6–8 posts at most**, always as *proof or philosophy*, never a CTA. Let curiosity pull people to the link in bio — don't push. No "go sign up" energy; the product should feel discovered.
+- **Do not promote competitor book apps** (Fable, Goodreads, StoryGraph, etc.). Talk about the *behaviour* ("how we track what we read") — not the competitors by name — unless making a specific, fair strategic point. Never send her audience to a rival.
+- Keep collecting the audience's language ("I never thought of it that way") — those reactions are future product briefs for Stacked and the newsletter.
 
 ---
 
@@ -179,3 +194,23 @@ Not vanity-first. In order of importance:
 5. **Reach/followers** — real, but a *lagging* indicator of the four above. Never optimize for it at the promise's expense.
 
 Review monthly (see `calendar.md`): which pillar and which "connections" produced the most *resonance*, and do more of that.
+
+---
+
+## 11. Recurring Series (the skeleton of the calendar)
+
+Four named, repeatable series give the feed rhythm and give the audience *appointments* to look forward to. They're the backbone; standalone posts fill the gaps. All four are carousels (Pranjal's strength) and form the spine of the monthly calendar in `calendar.md`.
+
+### 🧠 Notice of the Week — *weekly · carousel · flagship*
+The core engine in its purest form: one real observation → connected → reframed into the week's "one new thought." **This is the promise, on schedule.** The Instagram carousel gets a LinkedIn written twin (one idea, two windows). Any pillar. If only one thing ships in a week, it's this.
+
+### 🔖 Rent-Free — *weekly · quote-card carousel*
+A line that lives rent-free — pulled from the idea bank's **reframe / "greatest hits" list** (see `idea-bank.md`) or a book she's reading — set as a quote card, with a short caption on *what it dismantled.* Builds the reading-club / newsletter muscle and feeds Stacked's Pillar-1 gravity. Pillars 1 (+3).
+
+### 📚 Shelf Check — *monthly · real-shelf / Stacked-adjacent carousel*
+A look at her actual shelf / current reading, framed as **mapping** — series gaps, what's missing, how she chooses next *without an algorithm.* Quietly demonstrates Stacked's worldview (proof-of-work, never a pitch). Pillar 1 (+ soft 5).
+
+### 🔍 I Spy — *monthly · interactive carousel*
+An interactive "spot it / notice it" post. Pranjal shares small things she noticed this month (in a photo, a campaign, a book, a street) and invites the audience to find, guess, or add their own. **It trains the audience's noticing muscle — literally the brand promise turned into a game.** Drives comments & saves. Pillars 3 + 4.
+
+**Weekly rhythm:** 2 series posts guaranteed (Notice of the Week + Rent-Free). **Monthly:** Shelf Check and I Spy each land once. See `calendar.md` for the full month.

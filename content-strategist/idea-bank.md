@@ -18,6 +18,10 @@
 - "Sentences that live rent-free" — a running series (community seed).
 - A book everyone loves that didn't land for you — *why*, honestly (Contrarian, curiosity-first).
 - The idea a book gave you → translated into how people build taste / pay attention / trust.
+- **A shelf is a map, not a feed** — reading your own shelf vs. being fed a queue. *(Stacked philosophy)*
+- The series with a missing middle — why we abandon series (lost the thread, not the interest). *(Stacked)*
+- Choosing your next read *without* an algorithm — how you actually decide, and what that says about you. *(Stacked)*
+- The quiet pleasure of a catalog you *own* vs. a recommendation you're *given.* *(Stacked)*
 
 ## 🎬 Pillar 2 — Creativity & storytelling
 - Why a specific campaign *stayed with you* — the mechanism, not the praise.
@@ -59,6 +63,15 @@
 - Reward attention, don't extract it — the best marketing makes attention feel good to give.
 - A testimonial or measurable outcome → the human decision behind the number `[fill in real one]`.
 
+**🔨 Stacked — build-in-public (proof-of-work, never a pitch — see brand-brief §8):**
+- The itch: every reading app tells you what to read next; you wanted one that maps what you *have.*
+- What "series-gap tracking" taught you about how people finish things (design for the thread).
+- "No algorithm" as a *stance,* not a missing feature — positioning = deciding what you refuse to do.
+- Why you built it yourself — a strategist who ships is a walking case study.
+- A design decision that was really a behaviour bet `[e.g. what you show first on the shelf view]`.
+- What building a product taught you that 5 years of strategy didn't.
+- *(Guardrail: talk about the behaviour, never send them to Fable/Goodreads/StoryGraph. ~1 in 6–8 posts. No CTA — link in bio only.)*
+
 ---
 
 ## 🔗 Deliberate collisions (your signature — connect two far worlds)
@@ -73,7 +86,47 @@ Pair a Pillar 4 everyday thing with a Pillar 3/5 idea. These are your strongest 
 
 ---
 
-## ✍️ Reframes worth keeping (your "greatest hits" — future product TOC)
+## 🔁 Series banks (runway — pull from these each week)
+
+> The four recurring series (defined in `brand-brief.md §11`). Weeks 1–4 of Month 1 are slotted in `calendar.md`; the extras below are your bench for Month 2+.
+
+### 🧠 Notice of the Week (weekly · flagship) — bench
+- The matcha two minutes → attention is what life is made of. *(Wk1)*
+- The café hands the cup before asking → give before you ask. *(Wk2)*
+- `[book]` ruined a belief in the best way → love follows attention. *(Wk3)*
+- Your creative process as a metaphor for making anything. *(Wk4)*
+- The "wrong side" of a painting → where the person is.
+- A stranger's offhand comment that rewired how you see `[X]`.
+- Why the queue you hate is actually a trust exercise.
+- A text you almost didn't send → what hesitation reveals.
+
+### 🔖 Rent-Free (weekly · quote card) — bench *(feeds from the reframe list below)*
+- "Taste isn't something you have. It's something you build." *(Wk1)*
+- "A shelf is a map, not a feed." *(Wk2)*
+- "Premium isn't polish. It's revealed obsession." *(Wk3)*
+- "Clever gets noticed. Memorable gets repeated." *(Wk4)*
+- "Your onboarding is a café counter."
+- "Attention isn't something you spend. It's what your life is made of."
+- + any book line that dismantled a belief → set it, say what it broke.
+
+### 📚 Shelf Check (monthly · real shelf / Stacked-adjacent) — bench
+- Map your real shelf: the series with a missing middle. *(Month 1)*
+- "3 books I own and will never read — and why I keep them."
+- How you *actually* choose your next read (no algorithm).
+- Your rereads → what a book you return to says about you.
+- "The shape of my year in books" — mapping, not ranking.
+- A genre gap you didn't know you had until you mapped it.
+
+### 🔍 I Spy (monthly · interactive) — bench
+- "5 things I noticed this month that changed how I saw something ordinary." *(Month 1)*
+- "Spot the design choice" — a menu / poster / packaging + what it's really doing.
+- "I Spy: 4 tiny brand details most people walk past."
+- "Find the story hiding in this photo" — invite their read before you give yours.
+- "5 sentences I underlined this month — guess which one wrecked me."
+
+---
+
+## ✍️ Reframes worth keeping (your "greatest hits" — future product TOC + Rent-Free source)
 > Every time a post lands, paste its one-new-thought line here. This list becomes your
 > newsletter spine, workshop titles, and digital-product table of contents.
 - "Your onboarding is a café counter."
@@ -81,6 +134,9 @@ Pair a Pillar 4 everyday thing with a Pillar 3/5 idea. These are your strongest 
 - "Attention isn't something you spend. It's what your life is made of."
 - "Taste isn't something you have. It's something you build."
 - "The wrong side is where the person is."
+- "A shelf is a map, not a feed." *(Stacked)*
+- "Clever gets noticed. Memorable gets repeated."
+- "Positioning is just deciding what you refuse to do."
 - _[add yours as they land]_
 
 ---

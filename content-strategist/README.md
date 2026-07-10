@@ -52,10 +52,12 @@ Built around one promise:
 
 ## Where this is heading
 
-You're in the **audience + authority** phase. Every post quietly demonstrates the thinking
-people will one day pay for (workshops, frameworks, a reading club, a newsletter, consulting).
-The "greatest hits" reframes you collect in `idea-bank.md` are literally the table of contents
-for that future product. Don't sell yet. Earn trust in how you think. The business is 12–18
-months of consistent "one new thought" away — and this system is how you get there.
+You're in the **audience + authority** phase, building toward **Stacked** (`stacked.ooam.workers.dev`) —
+your own book-cataloging app, *your shelf, mapped.* Content builds toward it as **proof-of-work, not
+a pitch**: Pillar 1 carries the philosophy (shelves as maps, no-algorithm reading), Pillar 5 carries
+the build (a strategist who ships is a walking case study). The four recurring series — **Notice of the
+Week, Rent-Free, Shelf Check, I Spy** (`brand-brief.md §11`) — are the feed's backbone, and the
+"greatest hits" reframes in `idea-bank.md` become Stacked's future newsletter and product TOC.
+Don't sell yet. Earn trust in how you think — and let Stacked feel *discovered.*
 
 *Same person. Different windows. One brain noticing out loud.*

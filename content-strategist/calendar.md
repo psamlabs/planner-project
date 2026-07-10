@@ -28,66 +28,82 @@ Same insight. Two truths. Zero copy-paste.
 
 ---
 
-## Recommended weekly cadence (starter — adjust to capacity)
+## Recommended weekly cadence (built on the four series)
 
-Designed to be *doable*, then scale. Quality of thought > volume.
+Designed to be *doable*, then scale. Quality of thought > volume. The two weekly series are the non-negotiable spine; everything else flexes.
 
-| Platform | Posts/week | Mix |
-|----------|-----------|-----|
-| **LinkedIn** | 3 | 2 written posts (Overlap / Work Story / Contrarian) + 1 reading-bridge |
-| **Instagram** | 3–4 | 1 carousel + 1 caption-led single (art/life) + 1 reel or "quote it left me with" |
+| Slot | Platform | What | Locked? |
+|------|----------|------|---------|
+| **Tue** | Instagram | 🧠 **Notice of the Week** (flagship carousel) | ✅ every week |
+| **Thu** | Instagram | 🔖 **Rent-Free** (quote-card carousel) | ✅ every week |
+| **Sat** | Instagram | Supporting: art single / reel — OR the month's 📚 Shelf Check / 🔍 I Spy | monthly series lands here |
+| **Mon** | LinkedIn | The strategic twin of Notice of the Week (re-expressed) | ✅ every week |
+| **Wed** | LinkedIn | Strategist post — Work Story / Contrarian / **Stacked build-in-public** | ✅ every week |
+| **Fri** | LinkedIn | Reading-bridge (Pillar 1→5) or campaign teardown | flex |
 
-If that's too much at first: **2 LinkedIn + 2 Instagram.** Never miss two weeks in a row — return matters more than frequency.
+**Weekly total:** 3 Instagram + 3 LinkedIn. If capacity is tight, the floor is **Notice of the Week + Rent-Free + its LinkedIn twin** (never drop those). Never miss two weeks in a row — return matters more than frequency.
 
-### Weekly pillar rotation (so you don't over-index on one thing)
-Rotate the *lead* pillar each week; the others still appear. Over a month you touch all five.
-
-- **Week 1:** lead 🧠 Human behaviour (+ ☕ life, 💼 marketing)
-- **Week 2:** lead 💼 Marketing (+ 🎬 creativity, 🧠 behaviour)
-- **Week 3:** lead 📚 Books/ideas (+ ☕ art, 🎬 creativity)
-- **Week 4:** lead 🎬 Creativity & storytelling (+ 📚 books, incl. "AI this week")
+### Where the monthly series & Stacked arc land
+- **Shelf Check** → Week 2 Saturday. **I Spy** → Week 4 Saturday.
+- **Stacked build-in-public arc** (proof-of-work, never a pitch — see brand-brief §8):
+  - Wk 1: seed the *philosophy* (shelves as maps) — no product mention yet.
+  - Wk 2: the **reveal** ("I built a book app — here's the itch") + Shelf Check shows it in action.
+  - Wk 3: a **design/behaviour lesson** from building it (series-gap tracking, no-algorithm as a stance).
+  - Wk 4: **why no-algorithm is a position, not a feature** — the thinking behind the product.
 
 ---
 
-## Sample 4-week calendar (seeded, ready to write)
+## The full month — Weeks 1–4, ready to write
 
-> Each cell = a seed you can hand to the strategist persona. Replace with your real observations as they happen — these are primers.
+> Each cell is a seed you can hand straight to the strategist persona (`strategist.md`).
+> Format: `Series/Format · Pillar(s) · Seed`. Swap in your real observations as they happen.
+> `[brackets]` = drop in a real specific (book title, client, number).
 
-### Week 1 — lead: Human behaviour
-| Day | Platform | Pillar | Seed |
-|-----|----------|--------|------|
-| Mon | LinkedIn | 3+5 | "'Know your audience' describes the seat, not the person." (Contrarian) |
-| Tue | Instagram | 4+3 | The matcha ritual — the un-optimisable two minutes (carousel) |
-| Wed | LinkedIn | 5+3 | Work story: the "make it sound premium" client |
-| Thu | Instagram | 1+3 | A book quote about attention → what it broke (quote card) |
-| Fri | Instagram | 4+2 | A painting-in-progress + "the wrong side is where the person is" |
+### 🗓️ Week 1 — *establish the rhythm* · lead pillar: 🧠 Human behaviour
+| Day | Platform | Series / Format · Pillar · Seed |
+|-----|----------|--------------------------------|
+| Mon | LinkedIn | **Notice-of-the-Week twin** · 3+4 · The matcha ritual → *attention isn't something you spend, it's what your life is made of.* (strategic framing: the myth of optimising every minute) |
+| Tue | Instagram | 🧠 **Notice of the Week** (carousel) · 3+4 · The un-optimisable two minutes — same matcha, 300 mornings. The human/sensory version of Monday's idea. |
+| Wed | LinkedIn | **Contrarian** · 5+3 · "'Know your audience' describes the seat, not the person" — knowing = finishing their unsaid sentence. |
+| Thu | Instagram | 🔖 **Rent-Free** (quote card) · 1+3 · Reframe: *"Taste isn't something you have. It's something you build."* Caption: the book line that dismantled the "I just have bad taste" excuse. |
+| Fri | LinkedIn | **Reading-bridge** · 1+5 · A line from `[book/Substack]` you keep applying to marketing → reward attention, don't extract it. |
+| Sat | Instagram | Art single · 4+2 · A painting-in-progress + *"the wrong side is where the person is."* (Pillar-4 stockpile; invites shy makers.) |
 
-### Week 2 — lead: Marketing
-| Day | Platform | Pillar | Seed |
-|-----|----------|--------|------|
-| Mon | LinkedIn | 4+5 | The café gives the cup first → onboarding/trust (Overlap) |
-| Tue | Instagram | 4+5 | Photo of that café + quiet caption: give before you ask |
-| Wed | LinkedIn | 5 | A campaign that stayed with you — *why* it stuck (not what) |
-| Thu | Instagram | 3 | Reel: "we don't choose what we love, we choose what we attend to" |
-| Fri | LinkedIn | 1+5 | Reading leak: a line you keep applying to marketing |
+**Stacked note:** no mention this week. Thursday's Rent-Free about *taste* quietly plants the "you, not an algorithm, build taste" seed the reveal will pay off.
 
-### Week 3 — lead: Books & ideas
-| Day | Platform | Pillar | Seed |
-|-----|----------|--------|------|
-| Mon | Instagram | 1 | "Quote it left me with" — the book you're annoyed at (in the best way) |
-| Tue | LinkedIn | 1+3 | The idea from that book, translated to how people build taste |
-| Wed | Instagram | 4 | Flowers / coffee / tiny moment through a lens + one noticing |
-| Thu | LinkedIn | 5+3 | Work story: rewriting one line 14 times — the lesson wasn't words |
-| Fri | Instagram | 1+community | Reading-club seed: "sentences that live rent-free — what's yours?" |
+### 🗓️ Week 2 — *the reveal* · lead pillar: 💼 Marketing + 📚 Shelf Check
+| Day | Platform | Series / Format · Pillar · Seed |
+|-----|----------|--------------------------------|
+| Mon | LinkedIn | **Notice-of-the-Week twin** · 4+5 · The café hands you the cup *before* asking "for here or to go?" → *your onboarding is a café counter* (give before you ask). |
+| Tue | Instagram | 🧠 **Notice of the Week** (carousel) · 4+5 · Same café observation, sensory version — the tiny sequence that made you feel looked-after. |
+| Wed | LinkedIn | 💼 **Stacked build-in-public — the reveal** · 5+1 · "I built a book-cataloging app. Not to launch a startup — to fix an itch: every reading app tells me what to read next. I wanted one that just *maps what I have.*" (proof-of-work; link in bio, zero CTA) |
+| Thu | Instagram | 🔖 **Rent-Free** (quote card) · 1 · Reframe: *"A shelf is a map, not a feed."* Caption: what changed when you stopped letting an algorithm pick and started reading your own map. |
+| Fri | LinkedIn | **Campaign teardown** · 5+2 · A campaign that *stayed with you* — the mechanism of why it stuck (not the praise). |
+| Sat | Instagram | 📚 **Shelf Check** (monthly carousel) · 1+5 · Your real shelf, mapped: the series with a missing middle, the trilogy you never finished, how you pick next *without* an algorithm. (Stacked's worldview, shown not sold.) |
 
-### Week 4 — lead: Creativity & storytelling
-| Day | Platform | Pillar | Seed |
-|-----|----------|--------|------|
-| Mon | LinkedIn | 2+5 | Why certain campaigns stay with us — the mechanism |
-| Tue | Instagram | 2+4 | Your creative process (painting/cooking) as a metaphor for making anything |
-| Wed | LinkedIn | 2 | "What I learned about AI this week" — through a storytelling lens |
-| Thu | Instagram | 3+4 | A conversation that reframed something — tiny moment, big shift |
-| Fri | Instagram | 2 | Reel: how an idea travels (why some things get shared and some don't) |
+**Stacked note:** the week Stacked exists publicly — but as a *thing you made and think with,* framed by the Shelf Check demonstrating its philosophy.
+
+### 🗓️ Week 3 — *depth* · lead pillar: 📚 Books & ideas
+| Day | Platform | Series / Format · Pillar · Seed |
+|-----|----------|--------------------------------|
+| Mon | LinkedIn | **Notice-of-the-Week twin** · 1+3 · The idea from `[book you're annoyed at, in the best way]`, translated: *we don't choose what we love, we choose what we pay attention to.* |
+| Tue | Instagram | 🧠 **Notice of the Week** (carousel) · 1+3 · The book that "ruined a belief in the best way" — the one new thought it left you with. |
+| Wed | LinkedIn | 💼 **Stacked build-in-public — the design lesson** · 5+3 · "Building 'series-gap tracking' taught me something about how people finish things: we don't abandon series, we lose the *thread.* Design for the thread, not the reminder." |
+| Thu | Instagram | 🔖 **Rent-Free** (quote card) · 5+3 · Reframe: *"Premium isn't polish. It's revealed obsession."* Caption: the "make it sound premium" client story in two lines. |
+| Fri | LinkedIn | **Work Story** · 5+3 · Rewriting one `[subject line / caption]` 14 times — the lesson wasn't the words, it was what you were really deciding. |
+| Sat | Instagram | Caption-led single · 4 · Flowers / coffee / a tiny moment through a lens + one noticing. (Breather post; pure Pillar 4.) |
+
+### 🗓️ Week 4 — *zoom out* · lead pillar: 🎬 Creativity & storytelling + 🔍 I Spy
+| Day | Platform | Series / Format · Pillar · Seed |
+|-----|----------|--------------------------------|
+| Mon | LinkedIn | **Notice-of-the-Week twin** · 2+5 · Why certain campaigns *stay* — the mechanism (how an idea travels), not the praise. |
+| Tue | Instagram | 🧠 **Notice of the Week** (carousel) · 2+4 · Your creative process (painting / cooking / drink-making) as a metaphor for making anything — how creativity actually *feels.* |
+| Wed | LinkedIn | 💼 **Stacked build-in-public — the position** · 5+2 · "'No algorithm' isn't a missing feature. It's a stance: I'd rather you trust your own shelf than outsource your taste. Positioning is just deciding what you refuse to do." |
+| Thu | Instagram | 🔖 **Rent-Free** (quote card) · 2 · Reframe: *"Clever gets noticed. Memorable gets repeated."* Caption: the difference, and why brands chase the wrong one. |
+| Fri | LinkedIn | **AI-this-week / Pillar 2** · 2 · "What I learned about AI this week" — through a storytelling lens, not a tool tutorial. |
+| Sat | Instagram | 🔍 **I Spy** (monthly interactive carousel) · 3+4 · "5 things I noticed this month that changed how I saw something ordinary — can you spot yours?" Invite the audience to add theirs in the comments. (Noticing, turned into a game.) |
+
+**Month-end:** run the monthly review below. The best-performing reframes go into `idea-bank.md`'s "greatest hits" list — which is where next month's Rent-Free posts (and eventually Stacked's newsletter) come from.
 
 ---
 
