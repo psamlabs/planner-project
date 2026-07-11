@@ -55,6 +55,12 @@ baseline metrics set        first collab/duet attempt      Stacked v-next inform
 
 The live tracking/editing copy of this system is in Notion → **Content HQ** (under "Content Creation - pranjal"): a **📅 Content Tracker** with all 24 Month-1 posts (full editable copy, status flow `✍️ Needs my specifics → ✅ Draft ready → 🎨 Visuals needed → 📅 Scheduled → 📤 Posted → 📊 Reviewed`, dated Jul 13 – Aug 8), a **💡 Idea Bank** with the Month-2 bench, plus Pipeline board / Posting calendar / "Needs me" views. **Notion is the working copy; this repo is the strategy source of truth** — if the strategy changes, change it here first.
 
+### The Idea Drop pipeline (idea → classified → scripted, automatically)
+- **Capture:** the **📥 Idea Drop** form view on the Idea Bank — one field, phone-friendly. Submissions land with an empty Status (that's the "unprocessed" marker).
+- **Process:** a daily Claude routine (`Idea Drop inbox processor`, ~9:00 IST, fires into the strategist session) sweeps new submissions via Notion search, classifies Pillar/Series/Platform, sets 🌱 Fresh, and writes a ready-to-edit draft (post / carousel / 4-beat reel script) inside the idea's page. It never invents lived experience — `[brackets]` mark what only Pranjal can fill.
+- **Track:** Idea Bank status (🌱 Fresh → 📅 Slotted → ✅ Used) for ideas; Content Tracker pipeline for publishing.
+- For instant processing, message the Claude session directly instead of waiting for the morning sweep.
+
 ## The operating rhythm (how the work actually happens)
 
 **~4.5 hrs/week, in fixed blocks — batching beats daily scrambling:**
