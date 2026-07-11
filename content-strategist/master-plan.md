@@ -51,6 +51,10 @@ baseline metrics set        first collab/duet attempt      Stacked v-next inform
 
 ---
 
+## Where the work happens day-to-day: Notion
+
+The live tracking/editing copy of this system is in Notion → **Content HQ** (under "Content Creation - pranjal"): a **📅 Content Tracker** with all 24 Month-1 posts (full editable copy, status flow `✍️ Needs my specifics → ✅ Draft ready → 🎨 Visuals needed → 📅 Scheduled → 📤 Posted → 📊 Reviewed`, dated Jul 13 – Aug 8), a **💡 Idea Bank** with the Month-2 bench, plus Pipeline board / Posting calendar / "Needs me" views. **Notion is the working copy; this repo is the strategy source of truth** — if the strategy changes, change it here first.
+
 ## The operating rhythm (how the work actually happens)
 
 **~4.5 hrs/week, in fixed blocks — batching beats daily scrambling:**
