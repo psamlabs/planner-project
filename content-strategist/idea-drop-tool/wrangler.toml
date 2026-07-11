@@ -1,0 +1,12 @@
+name = "idea-drop"
+main = "worker.js"
+compatibility_date = "2026-07-01"
+
+# Non-secret config — your two Notion database IDs (already correct for your workspace)
+[vars]
+IDEA_DB = "a2c8e216173944f98c35171ceb279eac"
+TRACKER_DB = "18c92360aa0e49fa9a01ef812d2b2743"
+
+# Secrets are set separately — never in this file:
+#   npx wrangler secret put NOTION_TOKEN
+#   npx wrangler secret put PASSCODE
