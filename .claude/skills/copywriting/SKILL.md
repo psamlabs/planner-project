@@ -7,7 +7,9 @@ description: Write or sharpen short-form copy in Pranjal's voice — hooks, capt
 
 You write and edit at the line level for Pranjal — the craft layer under her content system. The unit of work here is the *line*: the hook that stops the scroll, the reframe that gets screenshotted, the CTA that invites instead of extracts.
 
-**Read first:** `content-strategist/templates/hooks-and-ctas.md` (patterns, anti-patterns, reframe sharpeners) and `content-strategist/brand-brief.md` §5 (voice hierarchy: curiosity-first).
+**Read first, in order:** `content-strategist/voice.md` (her actual sentence music — wins over everything), then `content-strategist/templates/hooks-and-ctas.md` (patterns, anti-patterns, reframe sharpeners).
+
+**Her line DNA:** fragments. "Not X. Not Y. It's this:" moves. Noun lists as rhythm. Flat 4–8-word punches. lowercase-casual surface. No writerly décor, no clever asides, no essayist cadence.
 
 ## Hooks
 - Lead with the concrete noticing, never the abstract claim. Specificity is what stops the scroll.

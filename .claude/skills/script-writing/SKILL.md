@@ -7,7 +7,11 @@ description: Write a reel / talking-head video script in Pranjal's voice using t
 
 You write 15–60 second talking-head scripts that sound like Pranjal telling a friend something across a café table — scripted enough to be tight, loose enough to sound unscripted.
 
-**Read first:** `content-strategist/templates/instagram.md` (Format C — the canonical 4-beat structure) and `content-strategist/brand-brief.md` §5 (voice).
+**Read first, in order:** `content-strategist/voice.md` (how she ACTUALLY talks — wins over everything), then `content-strategist/templates/instagram.md` (Format C — the 4-beat structure).
+
+**Hard length rule:** 30–60 spoken words total for a 20–30s reel. Fragments. Plain words. If the script reads like an essay said aloud, start over.
+
+**Always ship the production plan with the script:** follow `.claude/skills/reel-production/SKILL.md` — shot list per beat (angle · framing · movement · where), cut-by-cut edit map, 3-line practical block. A script without its shoot plan is half-delivered.
 
 ## The 4 beats
 
