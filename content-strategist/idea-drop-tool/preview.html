@@ -1,0 +1,153 @@
+<title>Idea Drop — preview</title>
+<style>
+  :root{
+    --bg:#f7f4ec; --card:#fffdf7; --ink:#332e26; --soft:#877e6d; --line:#e5decd;
+    --accent:#57806a; --accent-ink:#fff; --warn:#a8622f; --shadow:0 1px 3px rgba(51,46,38,.06);
+  }
+  @media(prefers-color-scheme:dark){:root{
+    --bg:#1a1712; --card:#26221b; --ink:#ebe4d4; --soft:#a09682; --line:#3b352a;
+    --accent:#8ab89d; --accent-ink:#1a1712; --warn:#d99a63; --shadow:0 1px 3px rgba(0,0,0,.3);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#1a1712; --card:#26221b; --ink:#ebe4d4; --soft:#a09682; --line:#3b352a;
+    --accent:#8ab89d; --accent-ink:#1a1712; --warn:#d99a63; --shadow:0 1px 3px rgba(0,0,0,.3);
+  }
+  :root[data-theme="light"]{
+    --bg:#f7f4ec; --card:#fffdf7; --ink:#332e26; --soft:#877e6d; --line:#e5decd;
+    --accent:#57806a; --accent-ink:#fff; --warn:#a8622f; --shadow:0 1px 3px rgba(51,46,38,.06);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font:16px/1.55 ui-serif,Georgia,'Times New Roman',serif;background:var(--bg);color:var(--ink);
+    max-width:620px;margin:0 auto;padding:22px 16px 70px}
+  .demo{font:12.5px/1.45 ui-sans-serif,system-ui,sans-serif;background:var(--card);border:1px dashed var(--warn);
+    color:var(--soft);border-radius:10px;padding:9px 12px;margin-bottom:18px}
+  .demo b{color:var(--warn);font-weight:600}
+  h1{font-size:1.4rem;letter-spacing:-.01em;margin-bottom:2px;text-wrap:balance}
+  .sub{color:var(--soft);font-size:.86rem;margin-bottom:20px}
+  nav{display:flex;gap:8px;margin-bottom:20px}
+  nav button{flex:1;padding:10px 4px;border:1px solid var(--line);background:var(--card);color:var(--soft);
+    border-radius:11px;font:inherit;font-size:.9rem;cursor:pointer;transition:border-color .15s,color .15s}
+  nav button.on{color:var(--ink);border-color:var(--accent);box-shadow:inset 0 -2px 0 var(--accent)}
+  nav button:focus-visible,.btn:focus-visible,.item:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  label{font:12px/1.3 ui-sans-serif,system-ui,sans-serif;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--soft);display:block;margin:14px 0 6px}
+  label:first-child{margin-top:0}
+  textarea,input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font:inherit;
+    background:var(--bg);color:var(--ink)}
+  textarea{min-height:112px;resize:vertical}
+  textarea::placeholder,input::placeholder{color:var(--soft);opacity:.75}
+  .btn{width:100%;margin-top:16px;padding:13px;border:0;border-radius:10px;background:var(--accent);
+    color:var(--accent-ink);font:inherit;font-size:1rem;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  .msg{margin-top:12px;font-size:.9rem;color:var(--accent);text-align:center;min-height:1.4em}
+  .grp{font:12px/1.3 ui-sans-serif,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--soft);margin:20px 0 8px}
+  .grp:first-child{margin-top:0}
+  .list{display:flex;flex-direction:column;gap:8px}
+  .item{display:block;text-decoration:none;color:inherit;padding:13px 15px;border:1px solid var(--line);
+    border-radius:12px;background:var(--card);box-shadow:var(--shadow)}
+  .item b{font-weight:600;font-size:.95rem;display:block;margin-bottom:4px;text-wrap:balance}
+  .meta{font:12px/1.6 ui-sans-serif,system-ui,sans-serif;color:var(--soft)}
+  .chip{display:inline-block;padding:1px 8px;border:1px solid var(--line);border-radius:99px;margin-right:5px}
+  .chip.need{border-color:var(--warn);color:var(--warn)}
+  .quiet{color:var(--soft);text-align:center;padding:34px 0;font-size:.9rem}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="demo"><b>Preview mode.</b> This is the exact interface of your Idea Drop tool with sample data — ideas you drop here stay in this browser only. The live version (deployed from <code>idea-drop-tool/</code>, ~10 min) saves straight to your Notion.</div>
+
+<h1>Idea Drop 🗺️</h1>
+<div class="sub">notice → drop it here → Claude scripts it → it's on the board</div>
+
+<nav>
+  <button id="t-drop" class="on" onclick="tab('drop')">💡 Drop</button>
+  <button id="t-ideas" onclick="tab('ideas')">🌱 Ideas</button>
+  <button id="t-posts" onclick="tab('posts')">📅 Posts</button>
+</nav>
+
+<div id="p-drop">
+  <div class="card">
+    <label for="seed">What did you notice? — one messy sentence is enough</label>
+    <textarea id="seed" placeholder="the flower seller wraps the stems before you've paid…"></textarea>
+    <label for="notes">Notes — optional context</label>
+    <input id="notes" placeholder="felt like it's about trust? maybe LinkedIn">
+    <button class="btn" id="go" onclick="drop()">Drop it 🌱</button>
+    <div class="msg" id="msg" role="status"></div>
+  </div>
+</div>
+<div id="p-ideas" hidden><div id="ideas"></div></div>
+<div id="p-posts" hidden><div id="posts"></div></div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const seedIdeas = [
+  {seed:"Friendships are an attention economy", status:"🌱 Fresh", series:"🧠 Notice of the Week", platform:"Instagram"},
+  {seed:"Why we save things we never revisit — the psychology of 'future me'", status:"🌱 Fresh", series:"🧠 Notice of the Week", platform:"Both"},
+  {seed:"'Your onboarding is a café counter' (greatest hit → Rent-Free card)", status:"🌱 Fresh", series:"🔖 Rent-Free", platform:"Instagram"},
+  {seed:"I Spy #02 — opens with the featured audience noticing from #01", status:"📅 Slotted", series:"🔍 I Spy", platform:"Instagram"},
+  {seed:"The matcha ritual — the un-optimisable two minutes", status:"✅ Used", series:"🧠 Notice of the Week", platform:"Instagram"}
+];
+
+const posts = [
+  {post:"W1 Fri · LI — Reading bridge: reward attention, don't extract it", status:"✍️ Needs my specifics", platform:"LinkedIn", date:"2026-07-17", reframe:"Needs: the real book + line you're reading"},
+  {post:"W2 Sat · IG — Shelf Check #01: my shelf confessed some things", status:"✍️ Needs my specifics", platform:"Instagram", date:"2026-07-25", reframe:"Needs: three real shelf confessions"},
+  {post:"W1 Mon · LI — Matcha → attention is what life is made of", status:"📅 Scheduled", platform:"LinkedIn", date:"2026-07-13", reframe:"Attention isn't something you spend."},
+  {post:"W1 Tue · IG — Notice of the Week #01 (carousel)", status:"🎨 Visuals needed", platform:"Instagram", date:"2026-07-14", reframe:"Shoot: matcha frames, Saturday light"},
+  {post:"W2 Wed · LI — ⭐ THE STACKED REVEAL", status:"🎨 Visuals needed", platform:"LinkedIn", date:"2026-07-22", reframe:"Positioning is what you're willing to refuse."}
+];
+
+function myIdeas(){ try{ return JSON.parse(localStorage.demoIdeas || "[]") }catch(e){ return [] } }
+
+function tab(t){
+  for(const x of ["drop","ideas","posts"]){
+    $("p-"+x).hidden = x !== t;
+    $("t-"+x).classList.toggle("on", x === t);
+  }
+  if(t==="ideas") renderIdeas();
+  if(t==="posts") renderPosts();
+}
+
+function drop(){
+  const s = $("seed").value.trim();
+  if(!s){ $("msg").textContent = "write the noticing first 🙂"; return; }
+  const mine = myIdeas();
+  mine.unshift({seed:s, notes:$("notes").value.trim(), status:"🕐 New — waiting for Claude", series:"", platform:""});
+  localStorage.demoIdeas = JSON.stringify(mine);
+  $("seed").value = ""; $("notes").value = "";
+  $("msg").textContent = "🌱 dropped — in the live version this is now in your Notion";
+}
+
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const chip = (v, cls) => v ? '<span class="chip'+(cls?' '+cls:'')+'">'+esc(v)+'</span>' : "";
+
+function renderIdeas(){
+  const all = [...myIdeas(), ...seedIdeas];
+  const order = ["🕐 New — waiting for Claude","🌱 Fresh","📅 Slotted","✅ Used"];
+  let h = "";
+  for(const g of order){
+    const rows = all.filter(i => i.status === g);
+    if(!rows.length) continue;
+    h += '<div class="grp">'+g+' · '+rows.length+'</div><div class="list">';
+    for(const i of rows)
+      h += '<a class="item" href="#" onclick="return false"><b>'+esc(i.seed)+'</b><span class="meta">'
+         + chip(i.series)+chip(i.platform)+(i.notes?esc(i.notes):"")+'</span></a>';
+    h += '</div>';
+  }
+  $("ideas").innerHTML = h || '<div class="quiet">no ideas yet — go notice something 👀</div>';
+}
+
+function renderPosts(){
+  const need = posts.filter(p => p.status === "✍️ Needs my specifics");
+  const up = posts.filter(p => p.status !== "✍️ Needs my specifics")
+                  .sort((a,b) => a.date < b.date ? -1 : 1);
+  const row = p => '<a class="item" href="#" onclick="return false"><b>'+esc(p.post)+'</b><span class="meta">'
+    + chip(p.date) + chip(p.platform) + chip(p.status, p.status.startsWith("✍️") ? "need" : "")
+    + esc(p.reframe) + '</span></a>';
+  let h = "";
+  if(need.length){ h += '<div class="grp">✍️ needs you · '+need.length+'</div><div class="list">'+need.map(row).join("")+'</div>'; }
+  h += '<div class="grp">📆 upcoming</div><div class="list">'+up.map(row).join("")+'</div>';
+  $("posts").innerHTML = h;
+}
+</script>
